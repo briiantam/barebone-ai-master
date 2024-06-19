@@ -20,9 +20,10 @@ const user = {
 };
 const navigation = [
   { name: "Dashboard", href: "/dashboard", current: true },
+  { name: "Company Profile", href: "/profile", current: false },
   { name: "Find Investors", href: "/investors", current: true },
   { name: "Outreach", href: "/outreach", current: false },
-  { name: "Startups", href: "/startups", current: false },
+  { name: "Info", href: "/info", current: false },
 ];
 
 function classNames(...classes) {
@@ -58,7 +59,7 @@ export default function PortalNavbar() {
                         alt="Your Company"
                       />
                     </div>
-                    <div className="hidden md:block">
+                    <div className="hidden lg:block">
                       <div className="ml-10 flex items-baseline space-x-4">
                         {navigation.map((item) => (
                           <Link
@@ -83,12 +84,12 @@ export default function PortalNavbar() {
                       </div>
                     </div>
                   </div>
-                  <div className="hidden md:block">
+                  <div className="hidden lg:block">
                     <div className="ml-4 flex items-center md:ml-6">
                       <UserButton afterSignOutUrl="/" />
                     </div>
                   </div>
-                  <div className="-mr-2 flex md:hidden">
+                  <div className="-mr-2 flex lg:hidden">
                     <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-black p-2 text-gray-200 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-0.5" />
                       <span className="sr-only">Open main menu</span>
@@ -108,7 +109,7 @@ export default function PortalNavbar() {
                 </div>
               </div>
 
-              <Disclosure.Panel className="md:hidden border-b border-t  border-gray-200">
+              <Disclosure.Panel className="lg:hidden border-b border-t  border-gray-200">
                 <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
                   {navigation.map((item) => (
                     <Disclosure.Button

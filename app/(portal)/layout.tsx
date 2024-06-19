@@ -24,7 +24,10 @@ export default async function PortalLayout({
           <PortalNavbar />
         </div>
       </header>
-      <main className=" pb-10 mt-10">
+      <main
+        className="w-full mx-auto pb-10 mt-10"
+        style={{ maxWidth: "2000px" }}
+      >
         <QueryProvider>
           <SheetProvider />
           <Toaster />
