@@ -5,64 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1717186458771,
-      "tag": "0000_married_vance_astro",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1717187238594,
-      "tag": "0001_rapid_archangel",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1717187269675,
-      "tag": "0002_confused_mother_askani",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1718613508308,
-      "tag": "0003_cold_sway",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1718613840921,
-      "tag": "0004_tough_winter_soldier",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1718614353268,
-      "tag": "0005_careful_angel",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "5",
-      "when": 1718617187435,
-      "tag": "0006_great_steve_rogers",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "5",
-      "when": 1718617725163,
-      "tag": "0007_strong_white_queen",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "5",
-      "when": 1718618385436,
-      "tag": "0008_friendly_santa_claus",
+      "when": 1718876968261,
+      "tag": "0000_ancient_avengers",
       "breakpoints": true
     }
   ]

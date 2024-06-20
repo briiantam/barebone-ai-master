@@ -1,5 +1,5 @@
-import { useState } from "react"; // Import useState
-import { Control, FieldValues, useWatch } from "react-hook-form"; // Import useWatch
+import { useState } from "react";
+import { useWatch } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -8,7 +8,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea"; // Added import for Textarea
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectTrigger,
@@ -17,40 +17,38 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { industries, countries } from "@/components/constants/index";
-import { Checkbox } from "@/components/ui/checkbox"; // Import Checkbox component
+import { Checkbox } from "@/components/ui/checkbox";
+import { FormProps } from "../types";
 
-interface CompanyInfoFormProps {
-  form: {
-    control: Control<FieldValues>;
-    setValue: any;
-  };
+interface CompanyInfoFormProps extends FormProps {
+  setValue: any;
   handleSelectIndustry: (industry: string) => void;
 }
 
 export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
-  form,
+  control,
+  setValue,
   handleSelectIndustry,
 }) => {
   const [noWebsite, setNoWebsite] = useState<boolean>(false);
 
-  // Watch the value of the websiteUrl field
   const websiteUrl = useWatch({
-    control: form.control,
-    name: "websiteUrl",
+    control,
+    name: "coWebsiteUrl",
   });
 
   return (
     <div className="mb-8 text-white space-y-4">
       <h2 className="text-2xl font-bold mb-2 text-center">
-        Company Introduction
+        Company Information
       </h2>
       <h2 className="text-md font-light mb-4 text-center">
-        Introduce your company and basic information
+        Tell us more about your company
       </h2>
       <div className="space-y-4">
         <FormField
-          control={form.control}
-          name="companyName"
+          control={control}
+          name="coName"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Company Name</FormLabel>
@@ -65,8 +63,8 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
           )}
         />
         <FormField
-          control={form.control}
-          name="websiteUrl"
+          control={control}
+          name="coWebsiteUrl"
           render={({ field }) => (
             <FormItem>
               <div className="flex justify-between items-center">
@@ -75,8 +73,8 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
                   <Checkbox
                     checked={noWebsite}
                     onCheckedChange={(checked) => {
-                      setNoWebsite(checked == true);
-                      form.setValue("websiteUrl", "");
+                      setNoWebsite(checked === true);
+                      setValue("coWebsiteUrl", "");
                     }}
                   />
                   <label className="ml-2 text-sm">No Website</label>
@@ -84,78 +82,87 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
               </div>
               <FormControl>
                 <Input
-                  placeholder="Our AI will analyze your business"
+                  type="url"
+                  placeholder="Let us analyze your website to gain a thorough understanding of your business"
                   {...field}
                   disabled={noWebsite}
                 />
               </FormControl>
-
               <FormMessage />
             </FormItem>
           )}
         />
-
         {noWebsite && (
           <>
             <FormField
-              control={form.control}
-              name="industries"
+              control={control}
+              name="coIndustry1"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    Industry (Select Top 3 Most Representative)
-                  </FormLabel>
-                  <div className="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
-                    <Select
-                      onValueChange={(value) => handleSelectIndustry(value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select Industry 1" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {industries.map((industry) => (
-                          <SelectItem key={industry} value={industry}>
-                            {industry}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <Select
-                      onValueChange={(value) => handleSelectIndustry(value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select Industry 2" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {industries.map((industry) => (
-                          <SelectItem key={industry} value={industry}>
-                            {industry}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <Select
-                      onValueChange={(value) => handleSelectIndustry(value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select Industry 3" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {industries.map((industry) => (
-                          <SelectItem key={industry} value={industry}>
-                            {industry}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <FormLabel>Industry 1</FormLabel>
+                  <Select onValueChange={(value) => field.onChange(value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Industry 1" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {industries.map((industry) => (
+                        <SelectItem key={industry} value={industry}>
+                          {industry}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
-              control={form.control}
-              name="companyDescription"
+              control={control}
+              name="coIndustry2"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Industry 2</FormLabel>
+                  <Select onValueChange={(value) => field.onChange(value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Industry 2" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {industries.map((industry) => (
+                        <SelectItem key={industry} value={industry}>
+                          {industry}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="coIndustry3"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Industry 3</FormLabel>
+                  <Select onValueChange={(value) => field.onChange(value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Industry 3" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {industries.map((industry) => (
+                        <SelectItem key={industry} value={industry}>
+                          {industry}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="coDescription"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Company Description</FormLabel>
@@ -169,28 +176,28 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="companyOneLiner"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Company One-Liner</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Describe your company in one sentence"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </>
         )}
+        <FormField
+          control={control}
+          name="coOneLiner"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Company One-Liner</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Describe your company in one sentence"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div className="flex flex-col md:flex-row md:space-x-2 space-y-2 md:space-y-0">
           <FormField
-            control={form.control}
-            name="country"
+            control={control}
+            name="coCountry"
             render={({ field }) => (
               <FormItem className="flex-1">
                 <FormLabel>Country/Market</FormLabel>
@@ -213,8 +220,8 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
             )}
           />
           <FormField
-            control={form.control}
-            name="city"
+            control={control}
+            name="coCity"
             render={({ field }) => (
               <FormItem className="flex-1">
                 <FormLabel>City</FormLabel>

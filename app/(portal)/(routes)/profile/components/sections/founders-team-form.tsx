@@ -1,4 +1,4 @@
-import { Control, FieldValues, UseFieldArrayReturn } from "react-hook-form";
+import { useState } from "react";
 import {
   FormField,
   FormItem,
@@ -8,144 +8,176 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { FormProps } from "../types";
+import { Button } from "@/components/ui/button"; // Import Button component
 
-interface FoundersTeamFormProps {
-  form: {
-    control: Control<FieldValues>;
+export const FoundersTeamForm: React.FC<FormProps> = ({ control }) => {
+  const [foundersCount, setFoundersCount] = useState(1);
+
+  const addFounder = () => {
+    if (foundersCount < 5) {
+      setFoundersCount((prev) => prev + 1);
+    }
   };
-  fields: UseFieldArrayReturn["fields"];
-  append: UseFieldArrayReturn["append"];
-  remove: UseFieldArrayReturn["remove"];
-}
 
-export const FoundersTeamForm: React.FC<FoundersTeamFormProps> = ({
-  form,
-  fields,
-  append,
-  remove,
-}) => (
-  <div className="mb-8">
-    <h2 className="text-2xl font-bold mb-2 text-center">Founders</h2>
-    <h2 className="text-md font-light mb-4 text-center">
-      Let us know more about you!
-    </h2>
-    {fields.map((field, index) => (
-      <div key={field.id} className="space-y-4">
-        <h3 className="text-lg font-medium mt-4">Founder {index + 1}</h3>
-        <div className="flex flex-col md:flex-row md:space-x-2 space-y-2 md:space-y-0">
-          <FormField
-            control={form.control}
-            name={`founders.${index}.firstName`}
-            render={({ field }) => (
-              <FormItem className="flex-1">
-                <FormLabel>First Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="First Name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name={`founders.${index}.lastName`}
-            render={({ field }) => (
-              <FormItem className="flex-1">
-                <FormLabel>Last Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Last Name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <FormField
-          control={form.control}
-          name={`founders.${index}.title`}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input placeholder="Title" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name={`founders.${index}.bio`}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bio</FormLabel>
-              <FormControl>
-                <Textarea placeholder="Bio" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className="flex flex-col md:flex-row md:space-x-2 space-y-2 md:space-y-0">
-          <FormField
-            control={form.control}
-            name={`founders.${index}.twitterUrl`}
-            render={({ field }) => (
-              <FormItem className="flex-1">
-                <FormLabel>Twitter URL</FormLabel>
-                <FormControl>
-                  <Input placeholder="Twitter URL" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name={`founders.${index}.linkedinUrl`}
-            render={({ field }) => (
-              <FormItem className="flex-1">
-                <FormLabel>LinkedIn URL</FormLabel>
-                <FormControl>
-                  <Input placeholder="LinkedIn URL" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="flex justify-between py-2">
-          {index > 0 && (
-            <Button
-              type="button"
-              onClick={() => remove(index)}
-              className="mr-4"
-              variant="outline"
-            >
-              Remove Founder
-            </Button>
-          )}
-          {fields.length < 5 && (
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() =>
-                append({
-                  firstName: "",
-                  lastName: "",
-                  title: "",
-                  bio: "",
-                  twitterUrl: "",
-                  linkedinUrl: "",
-                })
-              }
-            >
-              Add Founder
-            </Button>
-          )}
-        </div>
+  const removeFounder = () => {
+    if (foundersCount > 1) {
+      setFoundersCount((prev) => prev - 1);
+    }
+  };
+
+  return (
+    <div className="mb-8">
+      <h2 className="text-2xl font-bold mb-2 text-center">Founders</h2>
+      <h2 className="text-md font-light mb-4 text-center">
+        Let us know more about you!
+      </h2>
+      {[...Array(foundersCount)].map((_, index) => {
+        const firstNameKey = `founderFirstName${
+          index + 1
+        }` as keyof FormProps["control"]["_defaultValues"];
+        const lastNameKey = `founderLastName${
+          index + 1
+        }` as keyof FormProps["control"]["_defaultValues"];
+        const titleKey = `founderTitle${
+          index + 1
+        }` as keyof FormProps["control"]["_defaultValues"];
+        const bioKey = `founderBio${
+          index + 1
+        }` as keyof FormProps["control"]["_defaultValues"];
+        const twitterUrlKey = `founderTwitterUrl${
+          index + 1
+        }` as keyof FormProps["control"]["_defaultValues"];
+        const linkedinUrlKey = `founderLinkedinUrl${
+          index + 1
+        }` as keyof FormProps["control"]["_defaultValues"];
+
+        return (
+          <div key={index} className="space-y-4">
+            <h3 className="text-lg font-medium mt-4">Founder {index + 1}</h3>
+            <div className="flex flex-col md:flex-row md:space-x-2 space-y-2 md:space-y-0">
+              <FormField
+                control={control}
+                name={firstNameKey}
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>First Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder={`First Name ${index + 1}`}
+                        {...field}
+                        value={field.value?.toString() || ""}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={control}
+                name={lastNameKey}
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>Last Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder={`Last Name ${index + 1}`}
+                        {...field}
+                        value={field.value?.toString() || ""}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <FormField
+              control={control}
+              name={titleKey}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={`Title ${index + 1}`}
+                      {...field}
+                      value={field.value?.toString() || ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name={bioKey}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Bio</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder={`Bio ${index + 1}`}
+                      {...field}
+                      value={field.value?.toString() || ""}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex flex-col md:flex-row md:space-x-2 space-y-2 md:space-y-0">
+              <FormField
+                control={control}
+                name={twitterUrlKey}
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>Twitter URL</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="url"
+                        placeholder={`Twitter URL ${index + 1}`}
+                        {...field}
+                        value={field.value?.toString() || ""}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={control}
+                name={linkedinUrlKey}
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>LinkedIn URL</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="url"
+                        placeholder={`LinkedIn URL ${index + 1}`}
+                        {...field}
+                        value={field.value?.toString() || ""}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+        );
+      })}
+      <div className="flex justify-between mt-4">
+        {foundersCount > 1 && (
+          <Button type="button" onClick={removeFounder} variant="outline">
+            Remove Founder
+          </Button>
+        )}
+        {foundersCount < 5 && (
+          <Button type="button" onClick={addFounder} variant="outline">
+            Add Founder
+          </Button>
+        )}
       </div>
-    ))}
-  </div>
-);
+    </div>
+  );
+};

@@ -6,7 +6,7 @@ import { zValidator } from "@hono/zod-validator";
 import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
 
 import { db } from "@/db/drizzle";
-import { accounts, insertAccountSchema } from "@/db/schema";
+import { companies, insertCompanySchema } from "@/db/schema";
 
 const app = new Hono()
   .get("/", clerkMiddleware(), async (c) => {
@@ -18,11 +18,28 @@ const app = new Hono()
 
     const data = await db
       .select({
-        id: accounts.id,
-        name: accounts.name,
+        id: companies.id,
+        coName: companies.coName,
+        coWebsiteUrl: companies.coWebsiteUrl,
+        coDescription: companies.coDescription,
+        coOneLiner: companies.coOneLiner,
+        coCountry: companies.coCountry,
+        coCity: companies.coCity,
+        coProductStatus: companies.coProductStatus,
+        coCustomerCount: companies.coCustomerCount,
+        coMonthlyRevenue: companies.coMonthlyRevenue,
+        coAnnualRevenue: companies.coAnnualRevenue,
+        coAnnualExpense: companies.coAnnualExpense,
+        coExpectedValuation: companies.coExpectedValuation,
+        coFundraisingAmount: companies.coFundraisingAmount,
+        coPastFundraisingInfo: companies.coPastFundraisingInfo,
+        coFundingRound: companies.coFundingRound,
+        coIndustry1: companies.coIndustry1,
+        coIndustry2: companies.coIndustry2,
+        coIndustry3: companies.coIndustry3,
       })
-      .from(accounts)
-      .where(eq(accounts.userId, auth.userId));
+      .from(companies)
+      .where(eq(companies.userId, auth.userId));
 
     return c.json({ data });
   })
@@ -49,11 +66,28 @@ const app = new Hono()
 
       const [data] = await db
         .select({
-          id: accounts.id,
-          name: accounts.name,
+          id: companies.id,
+          coName: companies.coName,
+          coWebsiteUrl: companies.coWebsiteUrl,
+          coDescription: companies.coDescription,
+          coOneLiner: companies.coOneLiner,
+          coCountry: companies.coCountry,
+          coCity: companies.coCity,
+          coProductStatus: companies.coProductStatus,
+          coCustomerCount: companies.coCustomerCount,
+          coMonthlyRevenue: companies.coMonthlyRevenue,
+          coAnnualRevenue: companies.coAnnualRevenue,
+          coAnnualExpense: companies.coAnnualExpense,
+          coExpectedValuation: companies.coExpectedValuation,
+          coFundraisingAmount: companies.coFundraisingAmount,
+          coPastFundraisingInfo: companies.coPastFundraisingInfo,
+          coFundingRound: companies.coFundingRound,
+          coIndustry1: companies.coIndustry1,
+          coIndustry2: companies.coIndustry2,
+          coIndustry3: companies.coIndustry3,
         })
-        .from(accounts)
-        .where(and(eq(accounts.userId, auth.userId), eq(accounts.id, id)));
+        .from(companies)
+        .where(and(eq(companies.userId, auth.userId), eq(companies.id, id)));
 
       if (!data) {
         return c.json({ error: "Not found" }, 404);
@@ -67,8 +101,9 @@ const app = new Hono()
     clerkMiddleware(),
     zValidator(
       "json",
-      insertAccountSchema.pick({
-        name: true,
+      insertCompanySchema.omit({
+        id: true,
+        userId: true,
       })
     ),
     async (c) => {
@@ -80,17 +115,18 @@ const app = new Hono()
       }
 
       const [data] = await db
-        .insert(accounts)
+        .insert(companies)
         .values({
           id: createId(),
           userId: auth.userId,
-          ...values,
+          ...values, // Ensure values does not include id and userId
         })
         .returning();
 
       return c.json({ data });
     }
   )
+
   .post(
     "/bulk-delete",
     clerkMiddleware(),
@@ -109,15 +145,15 @@ const app = new Hono()
       }
 
       const data = await db
-        .delete(accounts)
+        .delete(companies)
         .where(
           and(
-            eq(accounts.userId, auth.userId),
-            inArray(accounts.id, values.ids)
+            eq(companies.userId, auth.userId),
+            inArray(companies.id, values.ids)
           )
         )
         .returning({
-          id: accounts.id,
+          id: companies.id,
         });
 
       return c.json({ data });
@@ -132,12 +168,7 @@ const app = new Hono()
         id: z.string().optional(),
       })
     ),
-    zValidator(
-      "json",
-      insertAccountSchema.pick({
-        name: true,
-      })
-    ),
+    zValidator("json", insertCompanySchema.partial()),
     async (c) => {
       const auth = getAuth(c);
       const { id } = c.req.valid("param");
@@ -152,9 +183,9 @@ const app = new Hono()
       }
 
       const [data] = await db
-        .update(accounts)
+        .update(companies)
         .set(values)
-        .where(and(eq(accounts.userId, auth.userId), eq(accounts.id, id)))
+        .where(and(eq(companies.userId, auth.userId), eq(companies.id, id)))
         .returning();
 
       if (!data) {
@@ -186,10 +217,10 @@ const app = new Hono()
       }
 
       const [data] = await db
-        .delete(accounts)
-        .where(and(eq(accounts.userId, auth.userId), eq(accounts.id, id)))
+        .delete(companies)
+        .where(and(eq(companies.userId, auth.userId), eq(companies.id, id)))
         .returning({
-          id: accounts.id,
+          id: companies.id,
         });
 
       if (!data) {

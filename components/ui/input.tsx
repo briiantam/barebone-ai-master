@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { cn } from "@/lib/utils";
 
 export interface InputProps
@@ -8,7 +7,22 @@ export interface InputProps
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, label, ...props }, ref) => {
+  ({ className, type = "text", label, ...props }, ref) => {
+    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+      const value = event.target.value;
+      if (
+        type === "url" &&
+        value &&
+        !/^https?:\/\//i.test(value) &&
+        /^www\./i.test(value)
+      ) {
+        event.target.value = `http://${value}`;
+      }
+      if (props.onBlur) {
+        props.onBlur(event);
+      }
+    };
+
     return (
       <div>
         {label && <label>{label}</label>}
@@ -19,6 +33,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className
           )}
           ref={ref}
+          onBlur={handleBlur}
           {...props}
         />
       </div>

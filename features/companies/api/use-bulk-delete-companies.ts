@@ -4,32 +4,31 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { client } from "@/lib/hono";
 
+// these all match with what we wrote in companies.ts
 type ResponseType = InferResponseType<
-  (typeof client.api.accounts)[":id"]["$patch"]
+  (typeof client.api.companies)["bulk-delete"]["$post"]
 >;
 type RequestType = InferRequestType<
-  (typeof client.api.accounts)[":id"]["$patch"]
+  (typeof client.api.companies)["bulk-delete"]["$post"]
 >["json"]; //based on account.ts
 
-export const useEditAccount = (id?: string) => {
+export const useBulkDeleteCompanies = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async (json) => {
-      const response = await client.api.accounts[":id"]["$patch"]({
+      const response = await client.api.companies["bulk-delete"]["$post"]({
         json,
-        param: { id },
       });
       return await response.json();
     },
     onSuccess: () => {
-      toast.success("Startup details updated");
-      queryClient.invalidateQueries({ queryKey: ["account", { id }] });
-      queryClient.invalidateQueries({ queryKey: ["accounts"] });
-      //TODO
+      toast.success("Company details deleted");
+      queryClient.invalidateQueries({ queryKey: ["companies"] });
+      // TODO: Also invalidate summary
     },
     onError: () => {
-      toast.error("Failed to edit startup");
+      toast.error("Failed to delete company details");
     },
   });
 

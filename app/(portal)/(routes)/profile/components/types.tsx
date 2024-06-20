@@ -1,11 +1,9 @@
-import { Control, FieldValues, UseFieldArrayReturn } from "react-hook-form";
+import { Control } from "react-hook-form";
+import { z } from "zod";
+import { formSchema } from "./form-schema";
+
+export type FormData = z.infer<typeof formSchema>;
 
 export interface FormProps {
-  control: Control<FieldValues>;
-}
-
-export interface FoundersFormProps extends FormProps {
-  fields: UseFieldArrayReturn["fields"];
-  append: UseFieldArrayReturn["append"];
-  remove: UseFieldArrayReturn["remove"];
+  control: Control<FormData>;
 }

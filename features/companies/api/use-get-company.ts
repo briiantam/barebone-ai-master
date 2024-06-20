@@ -4,17 +4,17 @@ import { useQuery } from "@tanstack/react-query";
 
 import { client } from "@/lib/hono";
 
-export const useGetAccount = (id?: string) => {
+export const useGetCompany = (id?: string) => {
   const query = useQuery({
     enabled: !!id,
-    queryKey: ["account", { id }],
+    queryKey: ["company", { id }],
     queryFn: async () => {
-      const response = await client.api.accounts[":id"].$get({
+      const response = await client.api.companies[":id"].$get({
         param: { id },
       });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch this startup");
+        throw new Error("Failed to fetch this company");
       }
 
       const { data } = await response.json();

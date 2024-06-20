@@ -1,4 +1,4 @@
-import { Control, FieldValues } from "react-hook-form";
+import { FormProps } from "../types"; // Update the import path as necessary
 import {
   FormField,
   FormItem,
@@ -17,15 +17,7 @@ import {
 } from "@/components/ui/select";
 import { fundingRounds } from "@/components/constants/index";
 
-interface FundraisingInfoFormProps {
-  form: {
-    control: Control<FieldValues>;
-  };
-}
-
-export const FundraisingInfoForm: React.FC<FundraisingInfoFormProps> = ({
-  form,
-}) => (
+export const FundraisingInfoForm: React.FC<FormProps> = ({ control }) => (
   <div className="mb-8 text-white space-y-4">
     <h2 className="text-2xl font-bold mb-2 text-center">Fundraising Details</h2>
     <h2 className="text-md font-light mb-4 text-center">
@@ -33,16 +25,24 @@ export const FundraisingInfoForm: React.FC<FundraisingInfoFormProps> = ({
     </h2>
     <div className="space-y-4">
       <FormField
-        control={form.control}
-        name="expectedValuation"
+        control={control}
+        name="coExpectedValuation"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Expected Valuation (USD)</FormLabel>
             <FormControl>
               <Input
-                type="number"
-                placeholder="How much are you expected to be valued at?"
+                type="text" // Use text input to allow formatted numbers
                 {...field}
+                value={
+                  field.value !== undefined
+                    ? new Intl.NumberFormat().format(field.value)
+                    : ""
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, "");
+                  field.onChange(value ? Number(value) : "");
+                }}
               />
             </FormControl>
             <FormMessage />
@@ -50,16 +50,24 @@ export const FundraisingInfoForm: React.FC<FundraisingInfoFormProps> = ({
         )}
       />
       <FormField
-        control={form.control}
-        name="fundraisingAmount"
+        control={control}
+        name="coFundraisingAmount"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Expected Fundraising Amount (USD)</FormLabel>
             <FormControl>
               <Input
-                type="number"
-                placeholder="How much are your expecting to fundraise this round?"
+                type="text" // Use text input to allow formatted numbers
                 {...field}
+                value={
+                  field.value !== undefined
+                    ? new Intl.NumberFormat().format(field.value)
+                    : ""
+                }
+                onChange={(e) => {
+                  const value = e.target.value.replace(/,/g, "");
+                  field.onChange(value ? Number(value) : "");
+                }}
               />
             </FormControl>
             <FormMessage />
@@ -67,8 +75,8 @@ export const FundraisingInfoForm: React.FC<FundraisingInfoFormProps> = ({
         )}
       />
       <FormField
-        control={form.control}
-        name="pastFundraisingInfo"
+        control={control}
+        name="coPastFundraisingInfo"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Past Fundraising Info</FormLabel>
@@ -83,8 +91,8 @@ export const FundraisingInfoForm: React.FC<FundraisingInfoFormProps> = ({
         )}
       />
       <FormField
-        control={form.control}
-        name="fundingRound"
+        control={control}
+        name="coFundingRound"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Funding Round</FormLabel>

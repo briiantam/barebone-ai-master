@@ -1,4 +1,4 @@
-import { Control, FieldValues } from "react-hook-form";
+import { FormProps } from "../types"; // Update the import path as necessary
 import {
   FormField,
   FormItem,
@@ -22,15 +22,7 @@ import {
   annualExpenses,
 } from "@/components/constants/index";
 
-interface OperationFinancialsFormProps {
-  form: {
-    control: Control<FieldValues>;
-  };
-}
-
-export const OperationFinancialsForm: React.FC<
-  OperationFinancialsFormProps
-> = ({ form }) => (
+export const OperationFinancialsForm: React.FC<FormProps> = ({ control }) => (
   <div className="mb-8 text-white space-y-4">
     <h2 className="text-2xl font-bold mb-2 text-center">
       Operational & Financial Information
@@ -39,8 +31,8 @@ export const OperationFinancialsForm: React.FC<
       Tell us a bit about your product and current traction
     </h2>
     <FormField
-      control={form.control}
-      name="productStatus"
+      control={control}
+      name="coProductStatus"
       render={({ field }) => (
         <FormItem>
           <FormLabel>Product Status</FormLabel>
@@ -63,8 +55,8 @@ export const OperationFinancialsForm: React.FC<
       )}
     />
     <FormField
-      control={form.control}
-      name="customerCount"
+      control={control}
+      name="coCustomerCount"
       render={({ field }) => (
         <FormItem>
           <FormLabel>Customers</FormLabel>
@@ -88,8 +80,8 @@ export const OperationFinancialsForm: React.FC<
     />
     {/* TODO - schema and forms should reflect ARR, MRR and Expenses */}
     <FormField
-      control={form.control}
-      name="monthlyRevenue"
+      control={control}
+      name="coMonthlyRevenue"
       render={({ field }) => (
         <FormItem>
           <FormLabel>Monthly Recurring Revenue</FormLabel>
@@ -112,8 +104,8 @@ export const OperationFinancialsForm: React.FC<
       )}
     />
     <FormField
-      control={form.control}
-      name="annualRevenue"
+      control={control}
+      name="coAnnualRevenue"
       render={({ field }) => (
         <FormItem>
           <FormLabel>Annual Recurring Revenue</FormLabel>
@@ -136,8 +128,8 @@ export const OperationFinancialsForm: React.FC<
       )}
     />
     <FormField
-      control={form.control}
-      name="annualExpenses"
+      control={control}
+      name="coAnnualExpense"
       render={({ field }) => (
         <FormItem>
           <FormLabel>Annual Expenses</FormLabel>

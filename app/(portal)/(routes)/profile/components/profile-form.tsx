@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { formSchema } from "./form-schema";
 import { z } from "zod";
+import { useCreateCompany } from "@/features/companies/api/use-create-company";
+import { FormProps } from "./types";
 
 enum FormSections {
   CompanyInfo,
@@ -17,22 +19,30 @@ enum FormSections {
 }
 
 const handleSelectIndustry = (form: any, industry: string) => {
-  const selectedIndustries = form.getValues("industries");
+  const selectedIndustries = [
+    form.getValues("coIndustry1"),
+    form.getValues("coIndustry2"),
+    form.getValues("coIndustry3"),
+  ].filter(Boolean);
+
   if (selectedIndustries.includes(industry)) {
-    form.setValue(
-      "industries",
-      selectedIndustries.filter((item: string) => item !== industry)
+    const updatedIndustries = selectedIndustries.filter(
+      (item: string) => item !== industry
     );
+    form.setValue("coIndustry1", updatedIndustries[0] || "");
+    form.setValue("coIndustry2", updatedIndustries[1] || "");
+    form.setValue("coIndustry3", updatedIndustries[2] || "");
   } else if (selectedIndustries.length < 3) {
-    form.setValue("industries", [...selectedIndustries, industry]);
+    form.setValue(`coIndustry${selectedIndustries.length + 1}`, industry);
   }
 };
 
 export function ProfileForm() {
-  const { form, fields, append, remove } = useProfileForm();
+  const { form } = useProfileForm();
   const [currentSection, setCurrentSection] = useState(
     FormSections.CompanyInfo
   );
+  const createCompany = useCreateCompany();
 
   const handleNext = () => {
     if (currentSection < FormSections.FundraisingInfo) {
@@ -47,7 +57,7 @@ export function ProfileForm() {
   };
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    createCompany.mutate(values);
   };
 
   return (
@@ -56,25 +66,20 @@ export function ProfileForm() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           {currentSection === FormSections.CompanyInfo && (
             <CompanyInfoForm
-              form={form}
+              {...form}
               handleSelectIndustry={(industry: string) =>
                 handleSelectIndustry(form, industry)
               }
             />
           )}
           {currentSection === FormSections.OperationFinancials && (
-            <OperationFinancialsForm form={form} />
+            <OperationFinancialsForm {...form} />
           )}
           {currentSection === FormSections.FoundersTeam && (
-            <FoundersTeamForm
-              form={form}
-              fields={fields}
-              append={append}
-              remove={remove}
-            />
+            <FoundersTeamForm {...form} />
           )}
           {currentSection === FormSections.FundraisingInfo && (
-            <FundraisingInfoForm form={form} />
+            <FundraisingInfoForm {...form} />
           )}
 
           <div className="flex justify-between mt-4">

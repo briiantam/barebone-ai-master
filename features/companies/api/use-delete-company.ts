@@ -5,27 +5,27 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/lib/hono";
 
 type ResponseType = InferResponseType<
-  (typeof client.api.accounts)[":id"]["$delete"]
+  (typeof client.api.companies)[":id"]["$delete"]
 >;
 
-export const useDeleteAccount = (id?: string) => {
+export const useDeleteCompany = (id?: string) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<ResponseType, Error>({
     mutationFn: async (json) => {
-      const response = await client.api.accounts[":id"]["$delete"]({
+      const response = await client.api.companies[":id"]["$delete"]({
         param: { id },
       });
       return await response.json();
     },
     onSuccess: () => {
-      toast.success("Account deleted");
-      queryClient.invalidateQueries({ queryKey: ["account", { id }] });
-      queryClient.invalidateQueries({ queryKey: ["accounts"] });
+      toast.success("Company profile deleted");
+      queryClient.invalidateQueries({ queryKey: ["company", { id }] });
+      queryClient.invalidateQueries({ queryKey: ["companies"] });
       //TODO
     },
     onError: () => {
-      toast.error("Failed to edit startup");
+      toast.error("Failed to edit company details");
     },
   });
 
