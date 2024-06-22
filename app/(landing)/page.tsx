@@ -15,7 +15,7 @@ export default function Home() {
           <Header />
         </Suspense>
       </header>
-      <main className="bg-black">
+      <main className="bg-black ">
         <Hero />
         <Problem />
         <FeaturesAccordion />

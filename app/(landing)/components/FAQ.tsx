@@ -118,7 +118,7 @@ const FaqItem = ({ item }: { item: FAQItemProps }) => {
 
 const FAQ = () => {
   return (
-    <section className="bg-black sm:py-12 md:py-24 lg:py-24" id="faq">
+    <section className="bg-black sm:py-12 md:py-24 lg:py-24 mt-20" id="faq">
       <div className="py-12 px-8 max-w-7xl mx-auto flex flex-col md:flex-row gap-12">
         <div className="flex flex-col text-left basis-1/2">
           <p className="inline-block font-semibold text-cyan-400 mb-4">FAQ</p>

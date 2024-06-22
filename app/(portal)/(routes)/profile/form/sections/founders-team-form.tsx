@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useWatch } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -11,18 +12,36 @@ import { Textarea } from "@/components/ui/textarea";
 import { FormProps } from "../types";
 import { Button } from "@/components/ui/button"; // Import Button component
 
-export const FoundersTeamForm: React.FC<FormProps> = ({ control }) => {
+export const FoundersTeamForm: React.FC<FormProps & { setValue: any }> = ({
+  control,
+  setValue,
+}) => {
   const [foundersCount, setFoundersCount] = useState(1);
+
+  const watchedFoundersCount = useWatch({
+    control,
+    name: "foundersCount",
+  });
+
+  useEffect(() => {
+    if (watchedFoundersCount !== undefined) {
+      setFoundersCount(watchedFoundersCount);
+    }
+  }, [watchedFoundersCount]);
 
   const addFounder = () => {
     if (foundersCount < 5) {
-      setFoundersCount((prev) => prev + 1);
+      const newCount = foundersCount + 1;
+      setFoundersCount(newCount);
+      setValue("foundersCount", newCount);
     }
   };
 
   const removeFounder = () => {
     if (foundersCount > 1) {
-      setFoundersCount((prev) => prev - 1);
+      const newCount = foundersCount - 1;
+      setFoundersCount(newCount);
+      setValue("foundersCount", newCount);
     }
   };
 
@@ -137,7 +156,7 @@ export const FoundersTeamForm: React.FC<FormProps> = ({ control }) => {
                         type="url"
                         placeholder={`Twitter URL ${index + 1}`}
                         {...field}
-                        value={field.value?.toString() || ""}
+                        value={field.value?.toString() || undefined}
                       />
                     </FormControl>
                     <FormMessage />
@@ -155,7 +174,7 @@ export const FoundersTeamForm: React.FC<FormProps> = ({ control }) => {
                         type="url"
                         placeholder={`LinkedIn URL ${index + 1}`}
                         {...field}
-                        value={field.value?.toString() || ""}
+                        value={field.value?.toString() || undefined}
                       />
                     </FormControl>
                     <FormMessage />
@@ -167,14 +186,14 @@ export const FoundersTeamForm: React.FC<FormProps> = ({ control }) => {
         );
       })}
       <div className="flex justify-between mt-4">
-        {foundersCount > 1 && (
-          <Button type="button" onClick={removeFounder} variant="outline">
-            Remove Founder
-          </Button>
-        )}
         {foundersCount < 5 && (
           <Button type="button" onClick={addFounder} variant="outline">
             Add Founder
+          </Button>
+        )}
+        {foundersCount > 1 && (
+          <Button type="button" onClick={removeFounder} variant="outline">
+            Remove Founder
           </Button>
         )}
       </div>

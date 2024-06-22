@@ -73,7 +73,7 @@ const Problem = () => {
           </BackgroundGradient>
         </div>
       </div>
-      <section className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 px-8">
+      <section className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 px-8 mb-36">
         <div className="flex flex-col gap-2 lg:gap-4 mt-20 sm:mt-20 md:mt-20 items-center justify-center text-center lg:text-center lg:items-center text-white">
           <Arrow extraStyle="md:-scale-x-350 md:-rotate-270" />
           <p className="text-l md:text-xl lg:text-xl opacity-80 text-slate-100 mb-20">

@@ -97,7 +97,10 @@ export const FundraisingInfoForm: React.FC<FormProps> = ({ control }) => (
           <FormItem>
             <FormLabel>Funding Round</FormLabel>
             <FormControl>
-              <Select onValueChange={(value) => field.onChange(value)}>
+              <Select
+                value={field.value}
+                onValueChange={(value) => field.onChange(value)}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select Funding Round" />
                 </SelectTrigger>

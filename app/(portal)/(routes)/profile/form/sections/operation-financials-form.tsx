@@ -37,7 +37,10 @@ export const OperationFinancialsForm: React.FC<FormProps> = ({ control }) => (
         <FormItem>
           <FormLabel>Product Status</FormLabel>
           <FormControl>
-            <Select onValueChange={(value) => field.onChange(value)}>
+            <Select
+              value={field.value}
+              onValueChange={(value) => field.onChange(value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="What stage is your product development at?" />
               </SelectTrigger>
@@ -61,7 +64,10 @@ export const OperationFinancialsForm: React.FC<FormProps> = ({ control }) => (
         <FormItem>
           <FormLabel>Customers</FormLabel>
           <FormControl>
-            <Select onValueChange={(value) => field.onChange(value)}>
+            <Select
+              value={field.value}
+              onValueChange={(value) => field.onChange(value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="How many customers do you have?" />
               </SelectTrigger>
@@ -86,7 +92,10 @@ export const OperationFinancialsForm: React.FC<FormProps> = ({ control }) => (
         <FormItem>
           <FormLabel>Monthly Recurring Revenue</FormLabel>
           <FormControl>
-            <Select onValueChange={(value) => field.onChange(value)}>
+            <Select
+              value={field.value}
+              onValueChange={(value) => field.onChange(value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Select MRR" />
               </SelectTrigger>
@@ -110,7 +119,10 @@ export const OperationFinancialsForm: React.FC<FormProps> = ({ control }) => (
         <FormItem>
           <FormLabel>Annual Recurring Revenue</FormLabel>
           <FormControl>
-            <Select onValueChange={(value) => field.onChange(value)}>
+            <Select
+              value={field.value}
+              onValueChange={(value) => field.onChange(value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Select ARR" />
               </SelectTrigger>
@@ -134,7 +146,10 @@ export const OperationFinancialsForm: React.FC<FormProps> = ({ control }) => (
         <FormItem>
           <FormLabel>Annual Expenses</FormLabel>
           <FormControl>
-            <Select onValueChange={(value) => field.onChange(value)}>
+            <Select
+              value={field.value}
+              onValueChange={(value) => field.onChange(value)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Select Annual Expenses" />
               </SelectTrigger>

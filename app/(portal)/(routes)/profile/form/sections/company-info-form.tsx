@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useWatch } from "react-hook-form";
 import {
   FormField,
@@ -30,11 +29,9 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
   setValue,
   handleSelectIndustry,
 }) => {
-  const [noWebsite, setNoWebsite] = useState<boolean>(false);
-
-  const websiteUrl = useWatch({
+  const noWebsite = useWatch({
     control,
-    name: "coWebsiteUrl",
+    name: "noWebsite",
   });
 
   return (
@@ -51,7 +48,7 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
           name="coName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Company Name</FormLabel>
+              <FormLabel>Company Name *</FormLabel>
               <FormControl>
                 <Input
                   placeholder="Please enter your company's name"
@@ -68,14 +65,20 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
           render={({ field }) => (
             <FormItem>
               <div className="flex justify-between items-center">
-                <FormLabel>Website URL</FormLabel>
+                <FormLabel>Website URL{!noWebsite ? " *" : ""}</FormLabel>
                 <div className="flex items-center ml-1">
-                  <Checkbox
-                    checked={noWebsite}
-                    onCheckedChange={(checked) => {
-                      setNoWebsite(checked === true);
-                      setValue("coWebsiteUrl", "");
-                    }}
+                  <FormField
+                    control={control}
+                    name="noWebsite"
+                    render={({ field: noWebsiteField }) => (
+                      <Checkbox
+                        checked={Boolean(noWebsiteField.value)}
+                        onCheckedChange={(checked) => {
+                          noWebsiteField.onChange(checked);
+                          setValue("coWebsiteUrl", undefined);
+                        }}
+                      />
+                    )}
                   />
                   <label className="ml-2 text-sm">No Website</label>
                 </div>
@@ -85,7 +88,7 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
                   type="url"
                   placeholder="Let us analyze your website to gain a thorough understanding of your business"
                   {...field}
-                  disabled={noWebsite}
+                  disabled={Boolean(noWebsite)}
                 />
               </FormControl>
               <FormMessage />
@@ -99,8 +102,11 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
               name="coIndustry1"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Industry 1</FormLabel>
-                  <Select onValueChange={(value) => field.onChange(value)}>
+                  <FormLabel>Industry 1 *</FormLabel>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value)}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Industry 1" />
                     </SelectTrigger>
@@ -121,8 +127,11 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
               name="coIndustry2"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Industry 2</FormLabel>
-                  <Select onValueChange={(value) => field.onChange(value)}>
+                  <FormLabel>Industry 2 *</FormLabel>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value)}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Industry 2" />
                     </SelectTrigger>
@@ -143,8 +152,11 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
               name="coIndustry3"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Industry 3</FormLabel>
-                  <Select onValueChange={(value) => field.onChange(value)}>
+                  <FormLabel>Industry 3 *</FormLabel>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value)}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Industry 3" />
                     </SelectTrigger>
@@ -165,7 +177,7 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
               name="coDescription"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Company Description</FormLabel>
+                  <FormLabel>Company Description *</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Describe your company in detail (we'll refine it for you)"
@@ -183,7 +195,7 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
           name="coOneLiner"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Company One-Liner</FormLabel>
+              <FormLabel>Company One-Liner *</FormLabel>
               <FormControl>
                 <Input
                   placeholder="Describe your company in one sentence"
@@ -200,9 +212,12 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
             name="coCountry"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>Country/Market</FormLabel>
+                <FormLabel>Country/Market (Headquarters) *</FormLabel>
                 <FormControl>
-                  <Select onValueChange={(value) => field.onChange(value)}>
+                  <Select
+                    value={field.value}
+                    onValueChange={(value) => field.onChange(value)}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Country/Market" />
                     </SelectTrigger>
@@ -224,7 +239,7 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
             name="coCity"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>City</FormLabel>
+                <FormLabel>City *</FormLabel>
                 <FormControl>
                   <Input placeholder="City" {...field} />
                 </FormControl>

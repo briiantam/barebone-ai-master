@@ -53,7 +53,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <header className="bg-slate-950 bg-opacity-50 z-10 border-b border-gray-800 fixed w-full">
+    <header className="bg-slate-950 bg-opacity-20 z-10 fixed w-full">
       <nav
         className="container flex items-center justify-between px-6 py-4 mx-auto"
         aria-label="Global"
@@ -103,7 +103,7 @@ const Header = () => {
             <Link
               href={link.href}
               key={link.href}
-              className="link link-hover text-white cursor-pointer"
+              className="link link-hover text-white cursor-pointer font-light text-md "
               title={link.label}
             >
               {link.label}

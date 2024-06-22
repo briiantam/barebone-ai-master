@@ -76,7 +76,7 @@ export function ProfileForm() {
             <OperationFinancialsForm {...form} />
           )}
           {currentSection === FormSections.FoundersTeam && (
-            <FoundersTeamForm {...form} />
+            <FoundersTeamForm {...form} setValue={form.setValue} />
           )}
           {currentSection === FormSections.FundraisingInfo && (
             <FundraisingInfoForm {...form} />
