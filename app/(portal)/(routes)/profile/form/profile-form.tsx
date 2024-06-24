@@ -61,7 +61,7 @@ export function ProfileForm() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto overflow-y-auto px-0 md:px-2 lg:px-2 xl:px-2">
+    <div className="max-w-4xl mx-auto overflow-y-auto px-0 md:px-2 lg:px-2 xl:px-2">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           {currentSection === FormSections.CompanyInfo && (

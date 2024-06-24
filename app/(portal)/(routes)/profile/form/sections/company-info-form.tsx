@@ -212,7 +212,7 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
             name="coCountry"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>Country/Market (Headquarters) *</FormLabel>
+                <FormLabel>Country/Market *</FormLabel>
                 <FormControl>
                   <Select
                     value={field.value}

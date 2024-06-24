@@ -12,13 +12,16 @@ import { z } from "zod";
 
 export const companies = pgTable("companies", {
   id: text("id").primaryKey(),
+  userId: text("user_id").notNull(),
   coName: text("co_name").notNull(),
   coWebsiteUrl: text("co_website_url"),
+  //nowebsite
   coDescription: text("co_description"),
   coOneLiner: text("co_one_liner").notNull(),
   coCountry: text("co_country").notNull(),
   coCity: text("co_city").notNull(),
   coProductStatus: text("co_product_status").notNull(),
+  //preRevenue
   coCustomerCount: text("co_customer_count"),
   coMonthlyRevenue: text("co_monthly_revenue"),
   coAnnualRevenue: text("co_annual_revenue"),
@@ -30,7 +33,6 @@ export const companies = pgTable("companies", {
   coIndustry1: text("co_industry_1"),
   coIndustry2: text("co_industry_2"),
   coIndustry3: text("co_industry_3"),
-  userId: text("user_id").notNull(),
   founderFirstName1: text("founder_first_name_1").notNull(),
   founderLastName1: text("founder_last_name_1").notNull(),
   founderTitle1: text("founder_title_1").notNull(),

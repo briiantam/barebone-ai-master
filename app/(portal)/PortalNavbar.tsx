@@ -46,10 +46,10 @@ export default function PortalNavbar() {
   return (
     <>
       <div className="min-h-full ">
-        <Disclosure as="nav" className="bg-neutral-900">
+        <Disclosure as="nav" className="bg-neutral-950">
           {({ open }) => (
             <>
-              <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-4 border-b border-gray-600">
+              <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-4 border-b border-neutral-800">
                 <div className="flex h-16 items-center justify-between">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
