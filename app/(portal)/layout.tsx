@@ -18,7 +18,7 @@ export default async function PortalLayout({
   //   }
 
   return (
-    <div className="h-full relative z-[50] bg-gray-950">
+    <div className="h-full relative z-[50] bg-black">
       <header className="fixed top-0 w-full z-10">
         <div>
           <PortalNavbar />

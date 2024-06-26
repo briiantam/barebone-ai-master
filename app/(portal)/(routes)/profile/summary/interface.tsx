@@ -2,51 +2,94 @@ export interface Company {
   id: string;
   coName: string;
   coOneLiner: string;
-  coWebsiteUrl?: string;
-  coDescription?: string;
+  coWebsiteUrl?: string | null;
+  coDescription?: string | null;
   coCountry: string;
   coCity: string;
   coProductStatus: string;
-  coCustomerCount?: string;
-  coMonthlyRevenue?: string;
-  coAnnualRevenue?: string;
-  coAnnualExpense?: string;
-  coExpectedValuation?: number;
-  coFundraisingAmount?: number;
-  coPastFundraisingInfo?: string;
+  coCustomerCount?: string | null;
+  coMonthlyRevenue?: string | null;
+  coAnnualRevenue?: string | null;
+  coAnnualExpense?: string | null;
+  coExpectedValuation?: number | null;
+  coFundraisingAmount?: number | null;
+  coPastFundraisingInfo?: string | null;
   coFundingRound: string;
-  coIndustry1?: string;
-  coIndustry2?: string;
-  coIndustry3?: string;
-  userId: string;
+  coIndustry1?: string | null;
+  coIndustry2?: string | null;
+  coIndustry3?: string | null;
+  userId?: string;
   founderFirstName1: string;
   founderLastName1: string;
   founderTitle1: string;
   founderBio1: string;
-  founderTwitterUrl1?: string;
-  founderLinkedinUrl1?: string;
-  founderFirstName2?: string;
-  founderLastName2?: string;
-  founderTitle2?: string;
-  founderBio2?: string;
-  founderTwitterUrl2?: string;
-  founderLinkedinUrl2?: string;
-  founderFirstName3?: string;
-  founderLastName3?: string;
-  founderTitle3?: string;
-  founderBio3?: string;
-  founderTwitterUrl3?: string;
-  founderLinkedinUrl3?: string;
-  founderFirstName4?: string;
-  founderLastName4?: string;
-  founderTitle4?: string;
-  founderBio4?: string;
-  founderTwitterUrl4?: string;
-  founderLinkedinUrl4?: string;
-  founderFirstName5?: string;
-  founderLastName5?: string;
-  founderTitle5?: string;
-  founderBio5?: string;
-  founderTwitterUrl5?: string;
-  founderLinkedinUrl5?: string;
+  founderTwitterUrl1?: string | null;
+  founderLinkedinUrl1?: string | null;
+  founderFirstName2?: string | null;
+  founderLastName2?: string | null;
+  founderTitle2?: string | null;
+  founderBio2?: string | null;
+  founderTwitterUrl2?: string | null;
+  founderLinkedinUrl2?: string | null;
+  founderFirstName3?: string | null;
+  founderLastName3?: string | null;
+  founderTitle3?: string | null;
+  founderBio3?: string | null;
+  founderTwitterUrl3?: string | null;
+  founderLinkedinUrl3?: string | null;
+  founderFirstName4?: string | null;
+  founderLastName4?: string | null;
+  founderTitle4?: string | null;
+  founderBio4?: string | null;
+  founderTwitterUrl4?: string | null;
+  founderLinkedinUrl4?: string | null;
+  founderFirstName5?: string | null;
+  founderLastName5?: string | null;
+  founderTitle5?: string | null;
+  founderBio5?: string | null;
+  founderTwitterUrl5?: string | null;
+  founderLinkedinUrl5?: string | null;
 }
+
+export const foundersFields = [
+  {
+    firstName: "founderFirstName1",
+    lastName: "founderLastName1",
+    title: "founderTitle1",
+    bio: "founderBio1",
+    twitter: "founderTwitterUrl1",
+    linkedin: "founderLinkedinUrl1",
+  },
+  {
+    firstName: "founderFirstName2",
+    lastName: "founderLastName2",
+    title: "founderTitle2",
+    bio: "founderBio2",
+    twitter: "founderTwitterUrl2",
+    linkedin: "founderLinkedinUrl2",
+  },
+  {
+    firstName: "founderFirstName3",
+    lastName: "founderLastName3",
+    title: "founderTitle3",
+    bio: "founderBio3",
+    twitter: "founderTwitterUrl3",
+    linkedin: "founderLinkedinUrl3",
+  },
+  {
+    firstName: "founderFirstName4",
+    lastName: "founderLastName4",
+    title: "founderTitle4",
+    bio: "founderBio4",
+    twitter: "founderTwitterUrl4",
+    linkedin: "founderLinkedinUrl4",
+  },
+  {
+    firstName: "founderFirstName5",
+    lastName: "founderLastName5",
+    title: "founderTitle5",
+    bio: "founderBio5",
+    twitter: "founderTwitterUrl5",
+    linkedin: "founderLinkedinUrl5",
+  },
+];

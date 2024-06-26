@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ProfileForm } from "./form/profile-form";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { BackgroundGradient } from "@/components/ui/BackgroundGradient";
 import { CompanySummary } from "./summary/company-summary";
 import { useGetCompanies } from "@/features/companies/api/use-get-companies";
@@ -13,16 +13,22 @@ export default function CompanyProfilePage() {
   const companiesQuery = useGetCompanies();
   const companies = companiesQuery.data || [];
   const hasCompany = companies.length > 0;
+  const company = hasCompany ? companies[0] : null;
 
-  if (companiesQuery.isLoading) return <div>Loading...</div>;
+  if (companiesQuery.isLoading)
+    return <div className="text-white">Loading...</div>;
   if (companiesQuery.error) return <div>Error loading company data</div>;
 
   return (
     <div className="flex mt-16 items-center justify-center">
       {/* Conditionally render based on company existence */}
-      {hasCompany ? (
+      {hasCompany && company ? (
         <div className="p-8 mt-4">
-          <CompanySummary />
+          <CompanySummary
+            company={company}
+            hasOperationalDetails={true}
+            gridCols="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+          />
         </div>
       ) : (
         <div className="w-full mt-16 sm:w-3/4 md:w-2/3 lg:w-2/3 max-w-4xl p-2 text-white flex flex-col">

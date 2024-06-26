@@ -23,7 +23,7 @@ const navigation = [
   { name: "Company Profile", href: "/profile", current: false },
   { name: "Find Investors", href: "/investors", current: true },
   { name: "Outreach", href: "/outreach", current: false },
-  { name: "Info", href: "/info", current: false },
+  // { name: "Info", href: "/info", current: false },
 ];
 
 function classNames(...classes) {
