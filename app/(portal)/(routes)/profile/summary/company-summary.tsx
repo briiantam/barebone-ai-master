@@ -14,9 +14,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { useProfileForm } from "../form/use-profile-form";
+import { Button } from "@/components/ui/button";
 
 interface CompanySummaryProps {
   company: Company;
@@ -77,12 +79,24 @@ export const CompanySummary: React.FC<CompanySummaryProps> = ({
           </button>
         </DialogTrigger>
         <DialogContent className="max-w-3xl max-h-[800px] overflow-hidden">
-          <DialogHeader className="flex items-center">
-            <DialogTitle className="text-2xl">Edit Company Profile</DialogTitle>
-            <DialogDescription>
-              Make changes to your company profile here. Click save when you're
-              done.
-            </DialogDescription>
+          <DialogHeader className="flex flex-col space-y-4 px-4">
+            <div className="flex justify-between items-start">
+              <div>
+                <DialogTitle className="text-2xl">
+                  Edit Company Profile
+                </DialogTitle>
+                <DialogDescription>
+                  Make changes to your company profile here. Click save when
+                  you're done.
+                </DialogDescription>
+              </div>
+              <Button
+                onClick={handleSave}
+                className="bg-indigo-600 border border-indigo-500 text-white px-4 py-2 mr-6 rounded-lg font-bold transform hover:-translate-y-1 transition duration-400 hover:bg-indigo-400"
+              >
+                Save
+              </Button>
+            </div>
           </DialogHeader>
           <div className="overflow-y-auto max-h-[calc(800px-6rem)] pr-4">
             <Form {...form}>

@@ -1,15 +1,8 @@
 import { FormProps } from "../form/types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Company } from "./interface";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+import { Company, foundersFields } from "./interface";
+import { DialogTitle } from "@/components/ui/dialog";
 import {
   Select,
   SelectTrigger,
@@ -30,7 +23,6 @@ import {
 import {
   FormField,
   FormItem,
-  FormLabel,
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
@@ -281,12 +273,40 @@ export const EditCompanyForm: React.FC<EditCompanyFormProps> = ({
       <div>
         <div className="flex flex-col gap-2 justify-between my-2">
           <div className="text-sm">Product Status</div>
-          <Input
-            type="text"
+          <FormField
+            control={control}
             name="coProductStatus"
-            value={companyData.coProductStatus}
-            onChange={onChange}
-            className="mb-2"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormControl>
+                  <Select
+                    value={companyData.coProductStatus || ""}
+                    onValueChange={(value) => {
+                      const syntheticEvent = {
+                        target: {
+                          name: "coProductStatus",
+                          value: value,
+                        },
+                      } as React.ChangeEvent<HTMLSelectElement>;
+
+                      onChange(syntheticEvent);
+                      field.onChange(value);
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="What stage is your product development at?" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {productStatuses.map((status) => (
+                        <SelectItem key={status} value={status}>
+                          {status}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+              </FormItem>
+            )}
           />
         </div>
       </div>
@@ -453,75 +473,92 @@ export const EditCompanyForm: React.FC<EditCompanyFormProps> = ({
       <DialogTitle className="my-4 text-lg border-b border-white py-2">
         Founders
       </DialogTitle>
-      <h1 className="font-bold py-1">Founder 1</h1>
-      <div className="flex flex-col-2 items-center gap-4 justify-between my-2">
-        <div className="flex flex-col gap-2 w-1/2">
-          <div className="text-sm">First Name</div>
+      <>
+        {foundersFields.map((field, index) => {
+          const firstName = field.firstName as keyof Company;
+          const lastName = field.lastName as keyof Company;
+          const title = field.title as keyof Company;
+          const bio = field.bio as keyof Company;
+          const twitter = field.twitter as keyof Company;
+          const linkedin = field.linkedin as keyof Company;
 
-          <Input
-            type="text"
-            name="founderFirstName1"
-            value={companyData.founderFirstName1}
-            onChange={onChange}
-            className="mb-2"
-          />
-        </div>
-        <div className="flex flex-col gap-2 w-1/2">
-          <div className="text-sm">Last Name</div>
+          // Only render if the first name field exists (to handle optional founders)
+          if (!companyData[firstName]) return null;
 
-          <Input
-            type="text"
-            name="founderLastName1"
-            value={companyData.founderLastName1}
-            onChange={onChange}
-            className="mb-2"
-          />
-        </div>
-        <div className="flex flex-col gap-2 w-1/2">
-          <div className="text-sm">Title</div>
-
-          <Input
-            type="text"
-            name="founderTitle1"
-            value={companyData.founderTitle1}
-            onChange={onChange}
-            className="mb-2"
-          />
-        </div>
-      </div>
-      <div>
-        <div className="flex flex-col gap-2 justify-between my-2">
-          <div className="text-sm">Bio</div>
-          <Textarea
-            name="founderBio1"
-            value={companyData.founderBio1}
-            onChange={onChange}
-            className="mb-2"
-          />
-        </div>
-      </div>
-      <div className="flex flex-col-2 items-center gap-4 justify-between my-2">
-        <div className="flex flex-col gap-2 w-1/2">
-          <div className="text-sm">Twitter/X URL</div>
-          <Input
-            type="text"
-            name="founderTwitterUrl1"
-            value={companyData.founderTwitterUrl1 || ""}
-            onChange={onChange}
-            className="mb-2"
-          />
-        </div>
-        <div className="flex flex-col gap-2 w-1/2">
-          <div className="text-sm">LinkedIn URL</div>
-          <Input
-            type="text"
-            name="founderLinkedinUrl1"
-            value={companyData.founderLinkedinUrl1 || ""}
-            onChange={onChange}
-            className="mb-2"
-          />
-        </div>
-      </div>
+          return (
+            <div key={index}>
+              <h1 className="font-semibold text-lg my-2 py-2 border-b border-gray-500">
+                Founder {index + 1}
+              </h1>
+              <div className="flex flex-col-2 items-center gap-4 justify-between my-2">
+                <div className="flex flex-col gap-2 w-1/2">
+                  <div className="text-sm">First Name</div>
+                  <Input
+                    type="text"
+                    name={firstName}
+                    value={companyData[firstName] || ""}
+                    onChange={onChange}
+                    className="mb-2"
+                  />
+                </div>
+                <div className="flex flex-col gap-2 w-1/2">
+                  <div className="text-sm">Last Name</div>
+                  <Input
+                    type="text"
+                    name={lastName}
+                    value={companyData[lastName] || ""}
+                    onChange={onChange}
+                    className="mb-2"
+                  />
+                </div>
+                <div className="flex flex-col gap-2 w-1/2">
+                  <div className="text-sm">Title</div>
+                  <Input
+                    type="text"
+                    name={title}
+                    value={companyData[title] || ""}
+                    onChange={onChange}
+                    className="mb-2"
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="flex flex-col gap-2 justify-between my-2">
+                  <div className="text-sm">Bio</div>
+                  <Textarea
+                    name={bio}
+                    value={companyData[bio] || ""}
+                    onChange={onChange}
+                    className="mb-2"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col-2 items-center gap-4 justify-between my-2">
+                <div className="flex flex-col gap-2 w-1/2">
+                  <div className="text-sm">Twitter/X URL</div>
+                  <Input
+                    type="text"
+                    name={twitter}
+                    value={companyData[twitter] || ""}
+                    onChange={onChange}
+                    className="mb-2"
+                  />
+                </div>
+                <div className="flex flex-col gap-2 w-1/2">
+                  <div className="text-sm">LinkedIn URL</div>
+                  <Input
+                    type="text"
+                    name={linkedin}
+                    value={companyData[linkedin] || ""}
+                    onChange={onChange}
+                    className="mb-2"
+                  />
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </>
 
       {/* Add other founder input fields here */}
       <DialogTitle className="my-4 text-lg border-b border-white py-2">
@@ -671,8 +708,6 @@ export const EditCompanyForm: React.FC<EditCompanyFormProps> = ({
           />
         </div>
       </div>
-
-      <Button onClick={onSave}>Save</Button>
     </div>
   );
 };
