@@ -1,0 +1,517 @@
+{
+  "id": "370a7eed-aa9d-4f3a-a846-30bf815ab671",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "5",
+  "dialect": "pg",
+  "tables": {
+    "companies": {
+      "name": "companies",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "co_name": {
+          "name": "co_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "co_website_url": {
+          "name": "co_website_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_no_website_url": {
+          "name": "co_no_website_url",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_industry_1": {
+          "name": "co_industry_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_industry_2": {
+          "name": "co_industry_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_industry_3": {
+          "name": "co_industry_3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_description": {
+          "name": "co_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_one_liner": {
+          "name": "co_one_liner",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_country": {
+          "name": "co_country",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "co_city": {
+          "name": "co_city",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "co_product_status": {
+          "name": "co_product_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_pre_revenue": {
+          "name": "co_pre_revenue",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_customer_count": {
+          "name": "co_customer_count",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_monthly_revenue": {
+          "name": "co_monthly_revenue",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_annual_revenue": {
+          "name": "co_annual_revenue",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_annual_expense": {
+          "name": "co_annual_expense",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_first_name_1": {
+          "name": "founder_first_name_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_last_name_1": {
+          "name": "founder_last_name_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_title_1": {
+          "name": "founder_title_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_bio_1": {
+          "name": "founder_bio_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_twitter_url_1": {
+          "name": "founder_twitter_url_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_linkedin_url_1": {
+          "name": "founder_linkedin_url_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_first_name_2": {
+          "name": "founder_first_name_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_last_name_2": {
+          "name": "founder_last_name_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_title_2": {
+          "name": "founder_title_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_bio_2": {
+          "name": "founder_bio_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_twitter_url_2": {
+          "name": "founder_twitter_url_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_linkedin_url_2": {
+          "name": "founder_linkedin_url_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_first_name_3": {
+          "name": "founder_first_name_3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_last_name_3": {
+          "name": "founder_last_name_3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_title_3": {
+          "name": "founder_title_3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_bio_3": {
+          "name": "founder_bio_3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_twitter_url_3": {
+          "name": "founder_twitter_url_3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_linkedin_url_3": {
+          "name": "founder_linkedin_url_3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_first_name_4": {
+          "name": "founder_first_name_4",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_last_name_4": {
+          "name": "founder_last_name_4",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_title_4": {
+          "name": "founder_title_4",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_bio_4": {
+          "name": "founder_bio_4",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_twitter_url_4": {
+          "name": "founder_twitter_url_4",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_linkedin_url_4": {
+          "name": "founder_linkedin_url_4",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_first_name_5": {
+          "name": "founder_first_name_5",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_last_name_5": {
+          "name": "founder_last_name_5",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_title_5": {
+          "name": "founder_title_5",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_bio_5": {
+          "name": "founder_bio_5",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_twitter_url_5": {
+          "name": "founder_twitter_url_5",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "founder_linkedin_url_5": {
+          "name": "founder_linkedin_url_5",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_expected_valuation": {
+          "name": "co_expected_valuation",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_fundraising_amount": {
+          "name": "co_fundraising_amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_past_fundraising_info": {
+          "name": "co_past_fundraising_info",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_funding_round": {
+          "name": "co_funding_round",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "companies_AI": {
+      "name": "companies_AI",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "company_id": {
+          "name": "company_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_industry_1": {
+          "name": "co_industry_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_industry_2": {
+          "name": "co_industry_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_industry_3": {
+          "name": "co_industry_3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_one_liner": {
+          "name": "co_one_liner",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_target_region": {
+          "name": "co_target_region",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_target_market": {
+          "name": "co_target_market",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_description_1": {
+          "name": "co_description_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_description_2": {
+          "name": "co_description_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_description_3": {
+          "name": "co_description_3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_target_customer_profile": {
+          "name": "co_target_customer_profile",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_customer_problem_1": {
+          "name": "co_customer_problem_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_customer_problem_2": {
+          "name": "co_customer_problem_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_customer_problem_3": {
+          "name": "co_customer_problem_3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_market_size": {
+          "name": "co_market_size",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_market_landscape": {
+          "name": "co_market_landscape",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_product_1": {
+          "name": "co_product_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_product_2": {
+          "name": "co_product_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_product_3": {
+          "name": "co_product_3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_differentation_1": {
+          "name": "co_differentation_1",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_differentation_2": {
+          "name": "co_differentation_2",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_differentation_3": {
+          "name": "co_differentation_3",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_additional_notes": {
+          "name": "co_additional_notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "summary": {
+          "name": "summary",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "companies_AI_company_id_companies_id_fk": {
+          "name": "companies_AI_company_id_companies_id_fk",
+          "tableFrom": "companies_AI",
+          "tableTo": "companies",
+          "columnsFrom": [
+            "company_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
