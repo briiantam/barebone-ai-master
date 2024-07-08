@@ -14,6 +14,12 @@ import {
 } from "@/db/schema";
 
 import OpenAI from "openai";
+import { GenerateAISummary } from "@/features/companiesAI/api/company-profile-AI/company-AI-call";
+// import { UseWebScraper } from "@/features/companiesAI/api/company-profile-AI/use-web-scraper";
+import { promisify } from "util";
+import { exec } from "child_process";
+
+const execAsync = promisify(exec);
 
 const app = new Hono()
   .get("/", clerkMiddleware(), async (c) => {
@@ -105,6 +111,7 @@ const app = new Hono()
       return c.json({ data });
     }
   )
+
   .post(
     "/analyze",
     clerkMiddleware(),
@@ -131,11 +138,16 @@ const app = new Hono()
       }
 
       try {
+        console.log("Fetching company data from database...");
+
         // Fetch company data
         const [company] = await db
           .select({
             coName: companies.coName,
             coWebsiteUrl: companies.coWebsiteUrl,
+            coDescription: companies.coDescription,
+            coCountry: companies.coCountry,
+            coCity: companies.coCity,
           })
           .from(companies)
           .where(
@@ -146,26 +158,60 @@ const app = new Hono()
           return c.json({ error: "Company not found" }, 404);
         }
 
-        const { coName, coWebsiteUrl } = company;
+        const { coName, coWebsiteUrl, coDescription, coCountry, coCity } =
+          company;
 
-        // Create AI prompt with company data
-        const aiPrompt = `Company Name: ${coName}\nWebsite: ${coWebsiteUrl}\n\n[Your specific prompt here]`;
+        console.log("Current working directory:", process.cwd());
+        console.log("PATH:", process.env.PATH);
+        console.log("Running Python script to analyze company profile...");
 
-        // Generate summary using AI
-        const chatCompletion = await openai.chat.completions.create({
-          model: "gpt-3.5-turbo",
-          messages: [
-            {
-              role: "system",
-              content: "You are an AI that generates company summaries.",
-            },
-            { role: "user", content: aiPrompt },
-          ],
-        });
+        const startTime = Date.now();
 
-        const summary = chatCompletion.choices[0].message.content;
+        // Run website scraper
+        const { stdout: websiteStdout, stderr: websiteStderr } =
+          await execAsync(
+            `python3 lib/company_profile_AI/main_co_web_scraper.py "${coWebsiteUrl}"`
+          );
+        const websiteElapsedTime = Date.now() - startTime;
+        console.log(`Website scraper execution time: ${websiteElapsedTime} ms`);
 
-        // Insert or update company summary in the companiesAI table
+        if (websiteStderr) {
+          console.error("Error from website scraper:", websiteStderr);
+        }
+        console.log("Website scraper output:", websiteStdout);
+        const companyWebsiteContent = websiteStdout;
+
+        // Run TechCrunch scraper
+        const { stdout: techcrunchStdout, stderr: techcrunchStderr } =
+          await execAsync(
+            `python3 lib/company_profile_AI/main_techcrunch_scraper.py "${coName}"`
+          );
+        const techcrunchElapsedTime = Date.now() - startTime;
+        console.log(
+          `TechCrunch scraper execution time: ${techcrunchElapsedTime} ms`
+        );
+
+        if (techcrunchStderr) {
+          console.error("Error from TechCrunch scraper:", techcrunchStderr);
+        }
+        console.log("TechCrunch scraper output:", techcrunchStdout);
+        const companyArticlesContent = techcrunchStdout;
+
+        console.log("Python scripts completed. Generating AI summary...");
+
+        const summary = await GenerateAISummary(
+          coName,
+          companyWebsiteContent,
+          companyArticlesContent,
+          coCountry,
+          coCity
+        );
+
+        const coSummary = summary;
+
+        //parsing the summary to get the company data
+
+        console.log("Inserting generated summary into database...");
 
         const [data] = await db
           .insert(companiesAI)
@@ -173,9 +219,33 @@ const app = new Hono()
             id: createId(),
             userId: auth.userId,
             companyId: companyId,
-            coSummary: summary,
+            coIndustry1: coIndustry1,
+            coIndustry2: coIndustry2,
+            coIndustry3: coIndustry3,
+            coOneLiner: coOneLiner,
+            coTargetRegion: coTargetRegion,
+            coTargetMarket: coTargetMarket,
+            coDescription1: coDescription1,
+            coDescription2: coDescription2,
+            coDescription3: coDescription3,
+            coTargetCustomerProfile: coTargetCustomerProfile,
+            coCustomerProblem1: coCustomerProblem1,
+            coCustomerProblem2: coCustomerProblem2,
+            coCustomerProblem3: coCustomerProblem3,
+            coMarketSize: coMarketSize,
+            coMarketLandscape: coMarketLandscape,
+            coProduct1: coProduct1,
+            coProduct2: coProduct2,
+            coProduct3: coProduct3,
+            coDifferentation1: coDifferentation1,
+            coDifferentation2: coDifferentation2,
+            coDifferentation3: coDifferentation3,
+            coAdditionalNotes: coAdditionalNotes,
+            coSummary: coSummary,
           })
           .returning();
+
+        console.log("Data inserted successfully.");
 
         return c.json({ data });
       } catch (error) {

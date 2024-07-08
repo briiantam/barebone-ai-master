@@ -65,7 +65,9 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
           render={({ field }) => (
             <FormItem>
               <div className="flex justify-between items-center">
-                <FormLabel>Website URL{!noWebsite ? " *" : ""}</FormLabel>
+                <FormLabel>
+                  Home / Landing Page Website URL{!noWebsite ? " *" : ""}
+                </FormLabel>
                 <div className="flex items-center ml-1">
                   <FormField
                     control={control}
@@ -212,7 +214,7 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
             name="coCountry"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>Country/Market *</FormLabel>
+                <FormLabel>HQ Country/Market *</FormLabel>
                 <FormControl>
                   <Select
                     value={field.value}
@@ -239,7 +241,7 @@ export const CompanyInfoForm: React.FC<CompanyInfoFormProps> = ({
             name="coCity"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>City *</FormLabel>
+                <FormLabel>HQ City *</FormLabel>
                 <FormControl>
                   <Input placeholder="City" {...field} />
                 </FormControl>

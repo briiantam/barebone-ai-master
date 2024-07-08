@@ -4,13 +4,13 @@ const urlSchema = z.string().refine(
   (value) => {
     if (value === "") return true; // Allow empty string
 
-    // Basic URL format check
-    const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.com([\/\w \.-]*)*\/?$/;
+    // General URL format check
+    const urlPattern =
+      /^(https?:\/\/)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})(:[0-9]+)?(\/[^\s]*)?$/;
     return urlPattern.test(value);
   },
   {
-    message:
-      "Invalid URL format. Must be a valid .com URL with or without http/https.",
+    message: "Invalid URL format. Must be a valid URL.",
   }
 );
 

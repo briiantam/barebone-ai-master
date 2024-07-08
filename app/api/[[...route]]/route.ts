@@ -4,8 +4,6 @@ import companies from "./companies";
 import companiesAI from "./companiesAI";
 import { HTTPException } from "hono/http-exception";
 
-export const runtime = "edge"; //need to be deleted
-
 const app = new Hono().basePath("/api");
 
 const routes = app

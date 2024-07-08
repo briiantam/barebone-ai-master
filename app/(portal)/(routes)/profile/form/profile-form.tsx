@@ -9,7 +9,7 @@ import { useState } from "react";
 import { formSchema } from "./form-schema";
 import { z } from "zod";
 import { useCreateCompany } from "@/features/companies/api/use-create-company";
-import { useAnalyzeCompany } from "@/features/companiesAI/api/use-analyze-company";
+import { useAnalyzeCompany } from "@/features/companiesAI/api/use-analyze-companyAI";
 
 enum FormSections {
   CompanyInfo,

@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "barebone-ai-master",
   "version": "0.1.0",
   "private": true,
@@ -40,6 +39,7 @@
     "@tanstack/react-table": "^8.17.3",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
+    "chromedriver": "^126.0.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
@@ -76,12 +76,13 @@
     "react-use": "^17.5.0",
     "recharts": "^2.12.7",
     "selenium": "^2.20.0",
+    "selenium-webdriver": "^4.22.0",
     "simplex-noise": "^4.0.1",
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
+    "ts-node": "^10.9.2",
     "tsx": "^4.11.0",
-    "typescript": "^5",
     "world-countries": "^5.0.0",
     "zod": "^3.23.8",
     "zustand": "^4.5.2"
@@ -89,12 +90,13 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/leaflet": "^1.9.11",
-    "@types/node": "^20",
+    "@types/node": "^20.14.10",
     "@types/react": "^18",
     "@types/react-date-range": "^1.4.9",
     "@types/react-dom": "^18",
     "@types/react-scroll": "^1.8.10",
     "@types/react-select-country-list": "^2.2.3",
+    "@types/selenium-webdriver": "^4.1.24",
     "autoprefixer": "^10.4.19",
     "dotenv": "^16.4.5",
     "drizzle-kit": "^0.20.17",
@@ -102,6 +104,6 @@
     "eslint-config-next": "14.2.3",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.3"
   }
 }
