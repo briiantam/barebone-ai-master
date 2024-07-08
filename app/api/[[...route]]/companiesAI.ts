@@ -21,6 +21,45 @@ import { exec } from "child_process";
 
 const execAsync = promisify(exec);
 
+function parseAISummary(summary: string) {
+  const parsed: { [key: string]: string } = {};
+
+  const keys = [
+    "coIndustry1",
+    "coIndustry2",
+    "coIndustry3",
+    "coOneLiner",
+    "coTargetRegion",
+    "coTargetMarket",
+    "coDescription1",
+    "coDescription2",
+    "coDescription3",
+    "coTargetCustomerProfile",
+    "coCustomerProblem1",
+    "coCustomerProblem2",
+    "coCustomerProblem3",
+    "coMarketSize",
+    "coMarketLandscape",
+    "coProduct1",
+    "coProduct2",
+    "coProduct3",
+    "coDifferentation1",
+    "coDifferentation2",
+    "coDifferentation3",
+    "coAdditionalNotes",
+  ];
+
+  keys.forEach((key) => {
+    const regex = new RegExp(`${key}:\\s*([^\\n]+)`, "g");
+    const match = regex.exec(summary);
+    if (match) {
+      parsed[key] = match[1].trim();
+    }
+  });
+
+  return parsed;
+}
+
 const app = new Hono()
   .get("/", clerkMiddleware(), async (c) => {
     const auth = getAuth(c);
@@ -207,9 +246,13 @@ const app = new Hono()
           coCity
         );
 
-        const coSummary = summary;
+        console.log("AI summary generated:", summary);
 
-        //parsing the summary to get the company data
+        console.log("Parsing data...");
+
+        const parsedSummary = parseAISummary(summary);
+
+        console.log("Parsed data:", parsedSummary);
 
         console.log("Inserting generated summary into database...");
 
@@ -219,29 +262,30 @@ const app = new Hono()
             id: createId(),
             userId: auth.userId,
             companyId: companyId,
-            coIndustry1: coIndustry1,
-            coIndustry2: coIndustry2,
-            coIndustry3: coIndustry3,
-            coOneLiner: coOneLiner,
-            coTargetRegion: coTargetRegion,
-            coTargetMarket: coTargetMarket,
-            coDescription1: coDescription1,
-            coDescription2: coDescription2,
-            coDescription3: coDescription3,
-            coTargetCustomerProfile: coTargetCustomerProfile,
-            coCustomerProblem1: coCustomerProblem1,
-            coCustomerProblem2: coCustomerProblem2,
-            coCustomerProblem3: coCustomerProblem3,
-            coMarketSize: coMarketSize,
-            coMarketLandscape: coMarketLandscape,
-            coProduct1: coProduct1,
-            coProduct2: coProduct2,
-            coProduct3: coProduct3,
-            coDifferentation1: coDifferentation1,
-            coDifferentation2: coDifferentation2,
-            coDifferentation3: coDifferentation3,
-            coAdditionalNotes: coAdditionalNotes,
-            coSummary: coSummary,
+            coIndustry1: parsedSummary.coIndustry1 || "",
+            coIndustry2: parsedSummary.coIndustry2 || "",
+            coIndustry3: parsedSummary.coIndustry3 || "",
+            coOneLiner: parsedSummary.coOneLiner || "",
+            coTargetRegion: parsedSummary.coTargetRegion || "",
+            coTargetMarket: parsedSummary.coTargetMarket || "",
+            coDescription1: parsedSummary.coDescription1 || "",
+            coDescription2: parsedSummary.coDescription2 || "",
+            coDescription3: parsedSummary.coDescription3 || "",
+            coTargetCustomerProfile:
+              parsedSummary.coTargetCustomerProfile || "",
+            coCustomerProblem1: parsedSummary.coCustomerProblem1 || "",
+            coCustomerProblem2: parsedSummary.coCustomerProblem2 || "",
+            coCustomerProblem3: parsedSummary.coCustomerProblem3 || "",
+            coMarketSize: parsedSummary.coMarketSize || "",
+            coMarketLandscape: parsedSummary.coMarketLandscape || "",
+            coProduct1: parsedSummary.coProduct1 || "",
+            coProduct2: parsedSummary.coProduct2 || "",
+            coProduct3: parsedSummary.coProduct3 || "",
+            coDifferentation1: parsedSummary.coDifferentation1 || "",
+            coDifferentation2: parsedSummary.coDifferentation2 || "",
+            coDifferentation3: parsedSummary.coDifferentation3 || "",
+            coAdditionalNotes: parsedSummary.coAdditionalNotes || "",
+            coSummary: summary,
           })
           .returning();
 
