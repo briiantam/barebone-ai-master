@@ -1,5 +1,5 @@
 {
-  "id": "370a7eed-aa9d-4f3a-a846-30bf815ab671",
+  "id": "27cc99ef-24ee-4b40-971b-5a67d0ffbd10",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -476,6 +476,12 @@
         },
         "co_additional_notes": {
           "name": "co_additional_notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "co_executive_summary": {
+          "name": "co_executive_summary",
           "type": "text",
           "primaryKey": false,
           "notNull": false

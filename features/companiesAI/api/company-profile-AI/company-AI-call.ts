@@ -25,7 +25,7 @@ export const GenerateAISummary = async (
     coIndustry3: [Tertiary Industry (if applicable)]
 
     coTargetRegion: [Target Region - List the target region(s) the company focuses on, e.g., Global, North America, Europe, Asia, etc. If Global, state that directly.]
-    coTargetMarket: [Target Market - List the target countries the company focuses on, e.g., United States, China, India, etc. If Global, ignore this section. Refer to the company's HQ Location to provide a more accurate target market.]
+    coTargetMarket: [Target Market - List the target countries the company focuses on, e.g., United States, China, India, etc. If Global, ignore this section and MUST NOT output "coTargetMarket" to prevent parsing errors. Refer to the company's HQ Location to provide a more accurate target market.]
 
     coOneLiner: [Company Vision/One-liner: If available, use the existing vision statement. If not, provide a concise, 10-word one-liner describing what the company does. Avoid overly salesy/marketing-heavy language.]
 
@@ -50,13 +50,15 @@ export const GenerateAISummary = async (
 
     Differentiation: [Provide 1-4 compelling points on why this company is special and deserves investment. Highlight technological innovations, market positioning, team strengths, or untapped market opportunities. For each differentiation, provide a header and a concise, detailed explanation.]
 
-    coDifferentation1: [Header, focusing on the most compelling point, with detailed explanation]
-    coDifferentation2: [Header, with detailed explanation]
-    coDifferentation3: [Header, with detailed explanation, (if applicable)]
+    coDifferentiation1: [Header, focusing on the most compelling point, with detailed explanation]
+    coDifferentiation2: [Header, with detailed explanation]
+    coDifferentiation3: [Header, with detailed explanation, (if applicable)]
 
     coMarketSize: [Potential Market Size - Identify the potential market size using the formula: total number of potential customers * average revenue per customer. Jsutify and provide rationale on why such numbers were used. Denote specific currency used, such as USD, RMB, GBP, etc. If the company is a B2B business, would be helpful to provide or guesstimate total enterprise expenditure on that service to show the potential of capturing that demand. Include relevant statistics, figures, or data points, but only doing so if accuracy is guaranteed. Summarize the market size and calculation rationale in 2-3 sentences.]
 
     coMarketLandscape: [Market Landscape - Provide a brief overview of the competitive landscape, including key competitors (what type of companies they are, and what are their names), their strengths and weaknesses, and the company's unique positioning and differentiation compared to them. Summarize in 2-3 sentences.]
+
+    coExecutiveSummary: [In one sentence, summarize what the company does and why it is a compelling investment opportunity. This should be a high-level overview that captures the essence of the company and its potential based on responses above.]
     
     The following content should be used to create the summary:
     Company website content:

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useGetCompanies } from "@/features/companies/api/use-get-companies";
+import { useGetCompaniesAI } from "@/features/companiesAI/api/use-get-companiesAI";
 import { useEditCompany } from "@/features/companies/api/use-edit-company";
 import { formatNumber } from "@/utils/number";
-import { Company, foundersFields } from "./interface";
+import { Company, CompanyAI, foundersFields } from "../interface";
 import { EditCompanyForm } from "./edit-company-form";
 import { RiTwitterXLine } from "react-icons/ri";
 import { FaLinkedin } from "react-icons/fa";
@@ -35,12 +36,14 @@ import { useDeleteCompany } from "@/features/companies/api/use-delete-company";
 
 interface CompanySummaryProps {
   company: Company;
+  companyAI?: CompanyAI;
   hasOperationalDetails: boolean;
   gridCols: string;
 }
 
 export const CompanySummary: React.FC<CompanySummaryProps> = ({
   company,
+  companyAI,
   hasOperationalDetails,
   gridCols,
 }) => {
@@ -48,7 +51,9 @@ export const CompanySummary: React.FC<CompanySummaryProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editCompanyData, setEditCompanyData] = useState<Company | null>(null);
   const companiesQuery = useGetCompanies();
+  const companiesAIQuery = useGetCompaniesAI();
   const companies: Company[] = companiesQuery.data || [];
+  const companiesAI: CompanyAI[] = companiesAIQuery.data || [];
 
   const editCompany = useEditCompany(editCompanyData?.id);
   const deleteCompany = useDeleteCompany(companies[0]?.id);
@@ -160,15 +165,30 @@ export const CompanySummary: React.FC<CompanySummaryProps> = ({
         </AlertDialog>
       </div>
       <div className="bg-gradient-to-l from-gray-200 via-fuchsia-200 to-stone-100 rounded-3xl p-4">
-        {companies.map((company) => (
-          <CompanyDetails key={company.id} company={company} />
-        ))}
+        {companies.map((company) => {
+          const companyAI = companiesAI.find(
+            (ai) => ai.companyId === company.id
+          );
+          return (
+            <CompanyDetails
+              key={company.id}
+              company={company}
+              companyAI={companyAI}
+            />
+          );
+        })}
       </div>
     </>
   );
 };
 
-const CompanyDetails = ({ company }: { company: Company }) => {
+const CompanyDetails = ({
+  company,
+  companyAI,
+}: {
+  company: Company;
+  companyAI?: CompanyAI;
+}) => {
   const hasOperationalDetails =
     company.coCustomerCount ||
     company.coMonthlyRevenue ||
@@ -192,10 +212,15 @@ const CompanyDetails = ({ company }: { company: Company }) => {
       : "grid-cols-1";
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:max-w-7xl lg:px-8">
-      <CompanyHeader company={company} />
-      <CompanyKeyHighlights
+    <div className="mx-auto w-full max-w-2xl px-4 py-8 sm:px-6 lg:w-[80rem] lg:max-w-[80rem] lg:px-8">
+      <CompanyHeader company={company} companyAI={companyAI} />
+      <CompanyExecSummary company={company} companyAI={companyAI} />
+
+      <CompanyKeyHighlights company={company} companyAI={companyAI} />
+      <CompanyMarket company={company} companyAI={companyAI} />
+      <CompanyOperations
         company={company}
+        companyAI={companyAI}
         hasOperationalDetails={true}
         gridCols={gridCols}
       />
@@ -205,14 +230,40 @@ const CompanyDetails = ({ company }: { company: Company }) => {
   );
 };
 
-const CompanyHeader = ({ company }: { company: Company }) => (
+const CompanyExecSummary = ({
+  company,
+  companyAI,
+}: {
+  company: Company;
+  companyAI?: CompanyAI;
+}) => (
+  <>
+    <div className="border-t mt-2 border-slate-600">
+      <div className="py-2 flex flex-col justify-between">
+        <h3 className="font-bold text-xl text-center text-gray-900">
+          {companyAI?.coExecutiveSummary}
+        </h3>
+      </div>
+    </div>
+  </>
+);
+
+const CompanyHeader = ({
+  company,
+  companyAI,
+}: {
+  company: Company;
+  companyAI?: CompanyAI;
+}) => (
   <>
     <div className="py-2">
       <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-5xl mb-2">
         {company.coName}
       </h2>
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-slate-800 ">
-        <p className="font-semibold">{company.coOneLiner}</p>
+        <p className="font-semibold">
+          {companyAI?.coOneLiner || company.coOneLiner}
+        </p>
         {company.coWebsiteUrl && (
           <Link
             href={
@@ -237,7 +288,11 @@ const CompanyHeader = ({ company }: { company: Company }) => (
     </div>
     <div className="flex flex-col sm:flex-row sm:justify-between mb-4 gap-4 sm:gap-2">
       <div className="flex flex-wrap gap-2">
-        {[company.coIndustry1, company.coIndustry2, company.coIndustry3]
+        {[
+          company.coIndustry1 || companyAI?.coIndustry1,
+          company.coIndustry2 || companyAI?.coIndustry2,
+          company.coIndustry3 || companyAI?.coIndustry3,
+        ]
           .filter(Boolean)
           .map((industry, index) => (
             <span
@@ -259,23 +314,252 @@ const CompanyHeader = ({ company }: { company: Company }) => (
 
 const CompanyKeyHighlights = ({
   company,
+  companyAI,
+}: {
+  company: Company;
+  companyAI?: CompanyAI;
+}) => (
+  <div className="border-t mt-2 border-slate-600">
+    <div className="mt-4 flex flex-col justify-between">
+      <h3 className="font-bold text-xl text-gray-900">Key Highlights</h3>
+      {(company.coProductStatus ||
+        companyAI?.coTargetRegion ||
+        companyAI?.coTargetMarket) && (
+        <div className="flex py-1">
+          <span className="font-medium text-gray-900">
+            {company.coProductStatus && (
+              <>
+                <span className="text-gray-900">Product Status:</span>{" "}
+                <span className="font-normal text-gray-600">
+                  {company.coProductStatus}
+                </span>
+              </>
+            )}
+            {companyAI?.coTargetRegion && (
+              <>
+                {" | "}
+                <span className="text-gray-900">Target Region:</span>{" "}
+                <span className="font-normal text-gray-600">
+                  {companyAI.coTargetRegion}
+                </span>
+              </>
+            )}
+            {companyAI?.coTargetMarket && (
+              <>
+                {" | "}
+                <span className="text-gray-900">Target Market:</span>{" "}
+                <span className="font-normal text-gray-600">
+                  {companyAI.coTargetMarket}
+                </span>
+              </>
+            )}
+          </span>
+        </div>
+      )}
+    </div>
+    <div className="flex flex-col sm:flex-row gap-4">
+      <div className="mt-4 w-full sm:w-1/2 pt-1">
+        <h3 className="font-semibold text-gray-900">
+          Summarizing {company.coName}:
+        </h3>
+        <div className="mt-2 text-md text-gray-700">
+          {companyAI?.coDescription1 ||
+          companyAI?.coDescription2 ||
+          companyAI?.coDescription3 ? (
+            <ul className="list-disc list-outside ml-4">
+              {companyAI?.coDescription1 && (
+                <li className="mb-2">
+                  <span className="leading-tight">
+                    {companyAI.coDescription1}
+                  </span>
+                </li>
+              )}
+              {companyAI?.coDescription2 && (
+                <li className="mb-2">
+                  <span className="leading-tight">
+                    {companyAI.coDescription2}
+                  </span>
+                </li>
+              )}
+              {companyAI?.coDescription3 && (
+                <li className="mb-2">
+                  <span className="leading-tight">
+                    {companyAI.coDescription3}
+                  </span>
+                </li>
+              )}
+            </ul>
+          ) : company.coDescription ? (
+            <p>{company.coDescription}</p>
+          ) : (
+            <p>Please provide your company description!</p>
+          )}
+        </div>
+      </div>
+      <div className="mt-4 w-full sm:w-1/2 pt-1">
+        <h3 className="font-semibold text-gray-900">
+          {company.coName}'s Differentiation:
+        </h3>
+        <div className="mt-2 text-md text-gray-700">
+          {companyAI?.coDifferentiation1 ||
+          companyAI?.coDifferentiation2 ||
+          companyAI?.coDifferentiation3 ? (
+            <ul className="list-disc list-outside ml-4">
+              {companyAI?.coDifferentiation1 && (
+                <li className="mb-2">
+                  <span className="leading-tight">
+                    {companyAI.coDifferentiation1}
+                  </span>
+                </li>
+              )}
+              {companyAI?.coDifferentiation2 && (
+                <li className="mb-2">
+                  <span className="leading-tight">
+                    {companyAI.coDifferentiation2}
+                  </span>
+                </li>
+              )}
+              {companyAI?.coDifferentiation3 && (
+                <li className="mb-2">
+                  <span className="leading-tight">
+                    {companyAI.coDifferentiation3}
+                  </span>
+                </li>
+              )}
+            </ul>
+          ) : (
+            <p>
+              Please let us know how your company is differentiated from anyone
+              else!
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const CompanyMarket = ({
+  company,
+  companyAI,
+}: {
+  company: Company;
+  companyAI?: CompanyAI;
+}) => (
+  <div className="border-t mt-2 border-slate-600">
+    <div className="mt-4 flex flex-col justify-between">
+      <h3 className="font-bold text-xl text-gray-900">
+        Addressable Market and Customer Profile
+      </h3>
+    </div>
+    <div className="flex flex-col sm:flex-row gap-4">
+      <div className="mt-4 w-full sm:w-1/2 pt-1">
+        <h3 className="font-semibold text-gray-900">
+          Market Sizing and Landscape
+        </h3>
+        <div className="mt-2 text-md text-gray-700">
+          {companyAI?.coMarketSize || companyAI?.coMarketLandscape ? (
+            <ul className="list-disc list-outside ml-4">
+              {companyAI?.coMarketSize && (
+                <li className="mb-2">
+                  <span className="font-semibold leading-tight">
+                    Potential Market Size:{" "}
+                  </span>
+                  <span className="leading-tight">
+                    {companyAI.coMarketSize}
+                  </span>
+                </li>
+              )}
+              {companyAI?.coMarketLandscape && (
+                <li className="mb-2">
+                  <span className="font-semibold leading-tight">
+                    Current Market Landscape:{" "}
+                  </span>
+                  <span className="leading-tight">
+                    {companyAI.coMarketLandscape}
+                  </span>
+                </li>
+              )}
+            </ul>
+          ) : (
+            <p>
+              Please provide any write-up on potential market size and current
+              market landscape!
+            </p>
+          )}
+        </div>
+      </div>
+      <div className="mt-4 w-full sm:w-1/2 pt-1">
+        <h3 className="font-semibold text-gray-900">Customer Profile</h3>
+        <div className="mt-2 text-md text-gray-700">
+          {companyAI?.coTargetCustomerProfile ? (
+            <ul className="list-disc list-outside ml-4">
+              {companyAI?.coTargetCustomerProfile && (
+                <li className="mb-2">
+                  <span className="leading-tight">
+                    {companyAI.coTargetCustomerProfile}
+                  </span>
+                </li>
+              )}
+            </ul>
+          ) : (
+            <p>Please provide your company's customer profile and problems!</p>
+          )}
+        </div>
+
+        <h3 className="font-semibold mt-2 text-gray-900">Customer Problems</h3>
+        <div className="mt-2 text-md text-gray-700">
+          {companyAI?.coCustomerProblem1 ||
+          companyAI?.coCustomerProblem2 ||
+          companyAI?.coCustomerProblem3 ? (
+            <ul className="list-disc list-outside ml-4">
+              {companyAI?.coCustomerProblem1 && (
+                <li className="mb-2">
+                  <span className="leading-tight">
+                    {companyAI.coCustomerProblem1}
+                  </span>
+                </li>
+              )}
+              {companyAI?.coCustomerProblem2 && (
+                <li className="mb-2">
+                  <span className="leading-tight">
+                    {companyAI.coCustomerProblem2}
+                  </span>
+                </li>
+              )}
+              {companyAI?.coCustomerProblem3 && (
+                <li className="mb-2">
+                  <span className="leading-tight">
+                    {companyAI.coCustomerProblem3}
+                  </span>
+                </li>
+              )}
+            </ul>
+          ) : (
+            <p>Please provide your company's customer profile and problems!</p>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const CompanyOperations = ({
+  company,
+  companyAI,
   hasOperationalDetails,
   gridCols,
 }: {
   company: Company;
+  companyAI?: CompanyAI;
   hasOperationalDetails: boolean;
   gridCols: string;
 }) => (
   <div className="border-t mt-2 border-slate-600">
     <div className="mt-4 flex flex-col justify-between">
-      <h3 className="font-bold text-xl text-gray-900">Key Highlights</h3>
-      {company.coProductStatus && (
-        <div className="flex py-1">
-          <span className="font-medium text-gray-900">
-            Product Status: {company.coProductStatus}
-          </span>
-        </div>
-      )}
+      <h3 className="font-bold text-xl text-gray-900">
+        Product and Operations
+      </h3>
     </div>
     <div
       className={`flex flex-col ${
@@ -283,19 +567,44 @@ const CompanyKeyHighlights = ({
       } gap-4`}
     >
       <div
-        className={`mt-4 ${
-          hasOperationalDetails ? "w-full sm:w-1/2" : "w-full"
+        className={`mt-4 w-full ${
+          hasOperationalDetails ? "sm:w-1/2" : ""
         } pt-1`}
       >
-        <h3 className="font-medium text-gray-900">
-          Learn more about {company.coName}:
-        </h3>
-        {company.coDescription && (
-          <p className="mt-2 text-md text-gray-700">{company.coDescription}</p>
-        )}
+        <h3 className="font-semibold text-gray-900">Key Products</h3>
+        <div className="mt-2 text-md text-gray-700">
+          {companyAI?.coProduct1 ||
+          companyAI?.coProduct2 ||
+          companyAI?.coProduct3 ? (
+            <ul className="list-disc list-outside ml-4">
+              {companyAI?.coProduct1 && (
+                <li className="mb-2">
+                  <span className="leading-tight">{companyAI.coProduct1}</span>
+                </li>
+              )}
+              {companyAI?.coProduct2 && (
+                <li className="mb-2">
+                  <span className="leading-tight">{companyAI.coProduct2}</span>
+                </li>
+              )}
+              {companyAI?.coProduct3 && (
+                <li className="mb-2">
+                  <span className="leading-tight">{companyAI.coProduct3}</span>
+                </li>
+              )}
+            </ul>
+          ) : (
+            <p>Please provide details about your products!</p>
+          )}
+        </div>
       </div>
       {hasOperationalDetails && (
-        <OperationalDetails company={company} gridCols={gridCols} />
+        <div className="mt-4 w-full sm:w-1/2 pt-1">
+          <h3 className="font-semibold text-gray-900">
+            Key Operational Details
+          </h3>
+          <OperationalDetails company={company} gridCols={gridCols} />
+        </div>
       )}
     </div>
   </div>
@@ -308,9 +617,9 @@ const OperationalDetails = ({
   company: Company;
   gridCols: string;
 }) => (
-  <div className="mt-4 w-full sm:w-1/2 flex flex-col gap-4">
-    <div className="rounded-sm py-2">
-      <div className={`grid ${gridCols} gap-4`}>
+  <div className="py-2 mt-1 w-full flex flex-col gap-4">
+    <div className="rounded-sm  w-full">
+      <div className={`grid ${gridCols} gap-4 `}>
         {company.coCustomerCount && (
           <DetailItem title="Customer Count" value={company.coCustomerCount} />
         )}
@@ -402,7 +711,7 @@ const SocialLink = ({
 const CompanyFundraising = ({ company }: { company: Company }) => (
   <div className="mt-4 border-t border-slate-600 pt-4">
     <h3 className="font-bold text-xl text-gray-900">Fundraising Details</h3>
-    <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3 lg:gap-x-8 border-t border-gray-100 pt-4">
+    <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3 lg:gap-x-8  pt-4">
       {company.coFundingRound && (
         <FundraisingDetail
           title="Funding Round"

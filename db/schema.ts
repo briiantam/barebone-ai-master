@@ -87,10 +87,11 @@ export const companiesAI = pgTable("companies_AI", {
   coProduct1: text("co_product_1"),
   coProduct2: text("co_product_2"),
   coProduct3: text("co_product_3"),
-  coDifferentation1: text("co_differentation_1"),
-  coDifferentation2: text("co_differentation_2"),
-  coDifferentation3: text("co_differentation_3"),
+  coDifferentiation1: text("co_differentation_1"),
+  coDifferentiation2: text("co_differentation_2"),
+  coDifferentiation3: text("co_differentation_3"),
   coAdditionalNotes: text("co_additional_notes"),
+  coExecutiveSummary: text("co_executive_summary"),
   coSummary: text("summary"),
 });
 

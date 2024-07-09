@@ -93,3 +93,33 @@ export const foundersFields = [
     linkedin: "founderLinkedinUrl5",
   },
 ];
+
+export interface CompanyAI {
+  id: string;
+  userId?: string;
+  companyId?: string | null;
+  coIndustry1?: string | null;
+  coIndustry2?: string | null;
+  coIndustry3?: string | null;
+  coOneLiner?: string | null;
+  coTargetRegion?: string | null;
+  coTargetMarket?: string | null;
+  coDescription1?: string | null;
+  coDescription2?: string | null;
+  coDescription3?: string | null;
+  coTargetCustomerProfile?: string | null;
+  coCustomerProblem1?: string | null;
+  coCustomerProblem2?: string | null;
+  coCustomerProblem3?: string | null;
+  coMarketSize?: string | null;
+  coMarketLandscape?: string | null;
+  coProduct1?: string | null;
+  coProduct2?: string | null;
+  coProduct3?: string | null;
+  coDifferentiation1?: string | null;
+  coDifferentiation2?: string | null;
+  coDifferentiation3?: string | null;
+  coAdditionalNotes?: string | null;
+  coExecSummary?: string | null;
+  coSummary?: string | null;
+}

@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS "companies_AI" (
 	"co_differentation_2" text,
 	"co_differentation_3" text,
 	"co_additional_notes" text,
+	"co_executive_summary" text,
 	"summary" text
 );
 --> statement-breakpoint

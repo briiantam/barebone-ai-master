@@ -43,9 +43,9 @@ def ai_company_profile(company_content, articles_content):
 
     Differentiation: [Provide 1-4 compelling points on why this company is special and deserves investment. Highlight technological innovations, market positioning, team strengths, or untapped market opportunities. For each differentiation, provide a header and a concise, detailed explanation.]
 
-    coDifferentation1: [Header, focusing on the most compelling point, with detailed explanation]
-    coDifferentation2: [Header, with detailed explanation]
-    coDifferentation3: [Header, with detailed explanation, (if applicable)]
+    coDifferentiation1: [Header, focusing on the most compelling point, with detailed explanation]
+    coDifferentiation2: [Header, with detailed explanation]
+    coDifferentiation3: [Header, with detailed explanation, (if applicable)]
 
     coMarketSize: [Potential Market Size - Identify the potential market size using the formula: total number of potential customers * average revenue per customer. Jsutify and provide rationale on why such numbers were used. Denote specific currency used, such as USD, RMB, GBP, etc. If the company is a B2B business, would be helpful to provide or guesstimate total enterprise expenditure on that service to show the potential of capturing that demand. Include relevant statistics, figures, or data points, but only doing so if accuracy is guaranteed. Summarize the market size and calculation rationale in 2-3 sentences.]
 

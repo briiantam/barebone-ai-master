@@ -1,7 +1,7 @@
 import { FormProps } from "../form/types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Company, foundersFields } from "./interface";
+import { Company, CompanyAI, foundersFields } from "../interface";
 import { DialogTitle } from "@/components/ui/dialog";
 import {
   Select,
@@ -43,8 +43,6 @@ export const EditCompanyForm: React.FC<EditCompanyFormProps> = ({
   control,
   companyData,
   onChange,
-  onSave,
-  setValue,
 }) => {
   return (
     <div className="px-4 py-4">
@@ -79,7 +77,7 @@ export const EditCompanyForm: React.FC<EditCompanyFormProps> = ({
           <Input
             type="text"
             name="coOneLiner"
-            value={companyData.coOneLiner}
+            value={companyData.coOneLiner || undefined}
             onChange={onChange}
             className="mb-2"
           />
