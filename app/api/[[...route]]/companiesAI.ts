@@ -130,9 +130,7 @@ const app = new Hono()
           id: companiesAI.id,
           userId: companiesAI.userId,
           companyId: companiesAI.companyId,
-          coIndustry1: companiesAI.coIndustry1,
-          coIndustry2: companiesAI.coIndustry2,
-          coIndustry3: companiesAI.coIndustry3,
+
           coOneLiner: companiesAI.coOneLiner,
           coTargetRegion: companiesAI.coTargetRegion,
           coTargetMarket: companiesAI.coTargetMarket,
@@ -232,6 +230,9 @@ const app = new Hono()
             coName: companies.coName,
             coWebsiteUrl: companies.coWebsiteUrl,
             coDescription: companies.coDescription,
+            coIndustry1: companies.coIndustry1,
+            coIndustry2: companies.coIndustry2,
+            coIndustry3: companies.coIndustry3,
             coCountry: companies.coCountry,
             coCity: companies.coCity,
           })
@@ -244,8 +245,16 @@ const app = new Hono()
           return c.json({ error: "Company not found" }, 404);
         }
 
-        const { coName, coWebsiteUrl, coDescription, coCountry, coCity } =
-          company;
+        const {
+          coName,
+          coWebsiteUrl,
+          coDescription,
+          coIndustry1,
+          coIndustry2,
+          coIndustry3,
+          coCountry,
+          coCity,
+        } = company;
 
         console.log("Current working directory:", process.cwd());
         console.log("PATH:", process.env.PATH);

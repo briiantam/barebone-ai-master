@@ -3,6 +3,7 @@ import React from "react";
 import config from "@/config";
 import { BackgroundBeams } from "@/components/ui/BackgroundBeams";
 import { HoverBorderGradient } from "@/components/ui/HoverBorderGradient";
+import Link from "next/link";
 
 export function CTA() {
   return (
@@ -26,13 +27,15 @@ export function CTA() {
         /> */}
       </div>
       <div className="mt-10 flex justify-center text-center">
-        <HoverBorderGradient
-          containerClassName="rounded-full"
-          as="button"
-          className=" text-white flex items-center space-x-2 z-[1] "
-        >
-          <span>Get {config.appName}</span>
-        </HoverBorderGradient>
+        <Link href="/dashboard" passHref>
+          <HoverBorderGradient
+            containerClassName="rounded-full"
+            as="button"
+            className=" text-white flex items-center space-x-2 z-[1] "
+          >
+            <span>Get {config.appName}</span>
+          </HoverBorderGradient>
+        </Link>
       </div>
 
       <BackgroundBeams />

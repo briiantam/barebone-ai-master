@@ -120,6 +120,6 @@ export interface CompanyAI {
   coDifferentiation2?: string | null;
   coDifferentiation3?: string | null;
   coAdditionalNotes?: string | null;
-  coExecSummary?: string | null;
+  coExecutiveSummary?: string | null;
   coSummary?: string | null;
 }

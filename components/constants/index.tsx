@@ -12,6 +12,7 @@ export const industries = [
   "Blockchain/Web 3",
   "B2B",
   "Climate",
+  "Communications",
   "Construction",
   "Consumer",
   "Consumer Electronics",
@@ -39,6 +40,7 @@ export const industries = [
   "Industrials",
   "Infrastructure",
   "Insurance",
+  "Insurtech",
   "Job and Career Services",
   "Legal",
   "Manufacturing and Robotics",
@@ -56,9 +58,11 @@ export const industries = [
   "Robotics",
   "Sales",
   "Security",
-  "Social",
+  "Semiconductors",
+  "Social Media",
   "Software",
   "Supply Chain and Logistics",
+  "Telecommunications",
   "Therapeutics",
   "Transportation",
   "Transportation Services",
@@ -73,7 +77,7 @@ export const productStatuses = [
 ];
 
 export const customerCounts = [
-  "No customer yet",
+  "No Customers Yet",
   "1-50",
   "51-100",
   "101-500",
@@ -81,6 +85,7 @@ export const customerCounts = [
 ];
 
 export const monthlyRevenues = [
+  "Pre-Revenue",
   "0-10K USD/Month",
   "10-50K USD/Month",
   "50-100K USD/Month",
@@ -88,6 +93,7 @@ export const monthlyRevenues = [
 ];
 
 export const annualRevenues = [
+  "Pre-Revenue",
   "0-100K USD/Year",
   "100-500K USD/Year",
   "500K-1MM USD/Year",
@@ -356,8 +362,8 @@ export const countries = [
 ];
 
 export const fundingRounds = [
-  "Pre-Seed (Idea Only)",
-  "Seed (Minimum Viable Product/Prototype)",
-  "Series A (Fully Built Out Product)",
-  "Series B+ (Generating Significant Revenue)",
+  "Pre-Seed (No Previous Funding)",
+  "Seed",
+  "Series A",
+  "Series B+",
 ];

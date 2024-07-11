@@ -57,7 +57,12 @@ export function ProfileForm() {
     }
   };
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
     try {
       // Create the company first
       const companyResponse = await createCompany.mutateAsync(values);
@@ -79,6 +84,8 @@ export function ProfileForm() {
       }
     } catch (error) {
       console.error("Failed to create and analyze company:", error);
+    } finally {
+      setIsSubmitting(false); // Add this line to reset the submitting state
     }
   };
 
@@ -116,7 +123,9 @@ export function ProfileForm() {
               </Button>
             )}
             {currentSection === FormSections.FundraisingInfo && (
-              <Button type="submit">Submit</Button>
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </Button>
             )}
           </div>
         </form>

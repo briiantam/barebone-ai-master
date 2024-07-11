@@ -427,7 +427,7 @@ export const EditCompanyForm: React.FC<EditCompanyFormProps> = ({
             )}
           />
         </div>
-        <div className="flex flex-col gap-2 w-1/2">
+        {/* <div className="flex flex-col gap-2 w-1/2">
           <div className="text-sm">Annual Expenses</div>
 
           <FormField
@@ -465,7 +465,7 @@ export const EditCompanyForm: React.FC<EditCompanyFormProps> = ({
               </FormItem>
             )}
           />
-        </div>
+        </div> */}
       </div>
 
       <DialogTitle className="my-4 text-lg border-b border-white py-2">

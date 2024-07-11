@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 import { ProfileForm } from "./form/profile-form";
 import { Card, CardContent } from "@/components/ui/card";
 import { BackgroundGradient } from "@/components/ui/BackgroundGradient";
@@ -10,6 +10,18 @@ import { useGetCompaniesAI } from "@/features/companiesAI/api/use-get-companiesA
 import { Company, CompanyAI } from "./interface";
 
 export const dynamic = "force-dynamic";
+
+const loadingStates = [
+  { text: "Gathering company data" },
+  { text: "Digesting info" },
+  { text: "Analyzing in detail" },
+  { text: "Scouring the web" },
+  { text: "Almost there" },
+  { text: "Unlocking insights" },
+  { text: "Connecting the dots" },
+  { text: "Decoding your brand" },
+  { text: "Ready for launch" },
+];
 
 export default function CompanyProfilePage() {
   const companiesQuery = useGetCompanies();
@@ -41,6 +53,9 @@ export default function CompanyProfilePage() {
                   Your inputs help our AI create a brief company summary and
                   pinpoint potential investors. More data yields more accurate
                   results!
+                </h2>
+                <h2 className="text-md font-light mb-4 ml-2">
+                  You can always update and refine your profile later.
                 </h2>
               </div>
 

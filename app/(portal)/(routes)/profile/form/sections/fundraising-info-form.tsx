@@ -15,7 +15,39 @@ import {
   SelectItem,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import { fundingRounds } from "@/components/constants/index";
+
+function parseValuation(input: any) {
+  if (typeof input !== "string") return input;
+
+  const cleanInput = input.toLowerCase().replace(/,/g, "");
+
+  // Match number followed optionally by k, m, b, t
+  const match = cleanInput.match(/^(\d+\.?\d*)([kmbt])?$/);
+
+  if (!match) return NaN;
+
+  let number = parseFloat(match[1]);
+  const suffix = match[2];
+
+  if (suffix) {
+    switch (suffix) {
+      case "k":
+      case "t":
+        number *= 1000;
+        break;
+      case "m":
+        number *= 1000000;
+        break;
+      case "b":
+        number *= 1000000000;
+        break;
+    }
+  }
+
+  return number;
+}
 
 export const FundraisingInfoForm: React.FC<FormProps> = ({ control }) => (
   <div className="mb-8 text-white space-y-4">
@@ -32,16 +64,30 @@ export const FundraisingInfoForm: React.FC<FormProps> = ({ control }) => (
             <FormLabel>Expected Valuation (USD)</FormLabel>
             <FormControl>
               <Input
-                type="text" // Use text input to allow formatted numbers
+                type="text"
                 {...field}
                 value={
-                  field.value !== undefined
+                  field.value !== undefined && !isNaN(field.value)
                     ? new Intl.NumberFormat().format(field.value)
-                    : ""
+                    : field.value
                 }
                 onChange={(e) => {
-                  const value = e.target.value.replace(/,/g, "");
-                  field.onChange(value ? Number(value) : "");
+                  const inputValue = e.target.value.replace(/,/g, "");
+                  // Only allow digits, dot, and k, m, b, t at the end
+                  const validInput = inputValue.replace(/[^0-9.kmbt]/gi, "");
+                  const parsedValue = parseValuation(validInput);
+
+                  if (!isNaN(parsedValue)) {
+                    field.onChange(parsedValue);
+                  } else if (validInput === "") {
+                    field.onChange("");
+                  } else {
+                    // If input is invalid, don't update the field
+                    e.target.value =
+                      field.value !== undefined
+                        ? new Intl.NumberFormat().format(field.value)
+                        : "";
+                  }
                 }}
               />
             </FormControl>
@@ -57,16 +103,30 @@ export const FundraisingInfoForm: React.FC<FormProps> = ({ control }) => (
             <FormLabel>Expected Fundraising Amount (USD)</FormLabel>
             <FormControl>
               <Input
-                type="text" // Use text input to allow formatted numbers
+                type="text"
                 {...field}
                 value={
-                  field.value !== undefined
+                  field.value !== undefined && !isNaN(field.value)
                     ? new Intl.NumberFormat().format(field.value)
-                    : ""
+                    : field.value
                 }
                 onChange={(e) => {
-                  const value = e.target.value.replace(/,/g, "");
-                  field.onChange(value ? Number(value) : "");
+                  const inputValue = e.target.value.replace(/,/g, "");
+                  // Only allow digits, dot, and k, m, b, t at the end
+                  const validInput = inputValue.replace(/[^0-9.kmbt]/gi, "");
+                  const parsedValue = parseValuation(validInput);
+
+                  if (!isNaN(parsedValue)) {
+                    field.onChange(parsedValue);
+                  } else if (validInput === "") {
+                    field.onChange("");
+                  } else {
+                    // If input is invalid, don't update the field
+                    e.target.value =
+                      field.value !== undefined
+                        ? new Intl.NumberFormat().format(field.value)
+                        : "";
+                  }
                 }}
               />
             </FormControl>

@@ -51,6 +51,7 @@ export const FoundersTeamForm: React.FC<FormProps & { setValue: any }> = ({
       <h2 className="text-md font-light mb-4 text-center">
         Let us know more about you!
       </h2>
+
       {[...Array(foundersCount)].map((_, index) => {
         const firstNameKey = `founderFirstName${
           index + 1
@@ -83,7 +84,7 @@ export const FoundersTeamForm: React.FC<FormProps & { setValue: any }> = ({
                     <FormLabel>First Name</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={`First Name ${index + 1}`}
+                        placeholder={`First Name`}
                         {...field}
                         value={field.value?.toString() || ""}
                       />
@@ -100,7 +101,7 @@ export const FoundersTeamForm: React.FC<FormProps & { setValue: any }> = ({
                     <FormLabel>Last Name</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder={`Last Name ${index + 1}`}
+                        placeholder={`Last Name`}
                         {...field}
                         value={field.value?.toString() || ""}
                       />
@@ -118,7 +119,7 @@ export const FoundersTeamForm: React.FC<FormProps & { setValue: any }> = ({
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={`Title ${index + 1}`}
+                      placeholder={`Title`}
                       {...field}
                       value={field.value?.toString() || ""}
                     />
@@ -135,7 +136,7 @@ export const FoundersTeamForm: React.FC<FormProps & { setValue: any }> = ({
                   <FormLabel>Bio</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder={`Bio ${index + 1}`}
+                      placeholder={`Input something basic and we'll polish up for you. Better results with your LinkedIn URL!`}
                       {...field}
                       value={field.value?.toString() || ""}
                     />
@@ -147,14 +148,14 @@ export const FoundersTeamForm: React.FC<FormProps & { setValue: any }> = ({
             <div className="flex flex-col md:flex-row md:space-x-2 space-y-2 md:space-y-0">
               <FormField
                 control={control}
-                name={twitterUrlKey}
+                name={linkedinUrlKey}
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel>Twitter URL</FormLabel>
+                    <FormLabel>LinkedIn URL</FormLabel>
                     <FormControl>
                       <Input
                         type="url"
-                        placeholder={`Twitter URL ${index + 1}`}
+                        placeholder={`LinkedIn URL`}
                         {...field}
                         value={field.value?.toString() || undefined}
                       />
@@ -165,14 +166,14 @@ export const FoundersTeamForm: React.FC<FormProps & { setValue: any }> = ({
               />
               <FormField
                 control={control}
-                name={linkedinUrlKey}
+                name={twitterUrlKey}
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel>LinkedIn URL</FormLabel>
+                    <FormLabel>Twitter URL</FormLabel>
                     <FormControl>
                       <Input
                         type="url"
-                        placeholder={`LinkedIn URL ${index + 1}`}
+                        placeholder={`Twitter URL`}
                         {...field}
                         value={field.value?.toString() || undefined}
                       />

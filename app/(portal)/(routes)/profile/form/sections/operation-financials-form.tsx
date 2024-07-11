@@ -62,14 +62,14 @@ export const OperationFinancialsForm: React.FC<FormProps> = ({ control }) => (
       name="coCustomerCount"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Customers</FormLabel>
+          <FormLabel>User Count</FormLabel>
           <FormControl>
             <Select
               value={field.value}
               onValueChange={(value) => field.onChange(value)}
             >
               <SelectTrigger>
-                <SelectValue placeholder="How many customers do you have?" />
+                <SelectValue placeholder="How many users do you have?" />
               </SelectTrigger>
               <SelectContent>
                 {customerCounts.map((count) => (
@@ -139,7 +139,7 @@ export const OperationFinancialsForm: React.FC<FormProps> = ({ control }) => (
         </FormItem>
       )}
     />
-    <FormField
+    {/* <FormField
       control={control}
       name="coAnnualExpense"
       render={({ field }) => (
@@ -165,6 +165,6 @@ export const OperationFinancialsForm: React.FC<FormProps> = ({ control }) => (
           <FormMessage />
         </FormItem>
       )}
-    />
+    /> */}
   </div>
 );

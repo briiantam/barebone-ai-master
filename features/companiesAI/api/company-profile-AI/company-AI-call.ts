@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { industries } from "@/components/constants";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -11,6 +12,7 @@ export const GenerateAISummary = async (
   companyCountry: string,
   companyCity: string
 ): Promise<string> => {
+  const industriesList = industries.join(", ");
   const aiPrompt = `Create a compelling company summary designed to attract venture capital investors. Follow the structure below and ensure the summary is detailed, specific, and highlights the unique strengths of the company.
 
     YOU MUST ABSOLUTELY OUTPUT THE FOLLOWING FORMAT WITH DATA LABELS SUCH AS coIndustry1, coIndustry2, coIndustry3, etc. DO NOT CHANGE THE FORMAT. ONLY FILL IN THE BLANKS WITH THE APPROPRIATE INFORMATION.:
@@ -19,7 +21,7 @@ export const GenerateAISummary = async (
 
     HQ Location (Country/Market, City): ${companyCountry}, ${companyCity}
 
-    Industry:
+    Industry: pick from the following list of industries: ${industriesList}
     coIndustry1: [Primary Industry]
     coIndustry2: [Secondary Industry (if applicable)]
     coIndustry3: [Tertiary Industry (if applicable)]
@@ -56,9 +58,9 @@ export const GenerateAISummary = async (
 
     coMarketSize: [Potential Market Size - Identify the potential market size using the formula: total number of potential customers * average revenue per customer. Jsutify and provide rationale on why such numbers were used. Denote specific currency used, such as USD, RMB, GBP, etc. If the company is a B2B business, would be helpful to provide or guesstimate total enterprise expenditure on that service to show the potential of capturing that demand. Include relevant statistics, figures, or data points, but only doing so if accuracy is guaranteed. Summarize the market size and calculation rationale in 2-3 sentences.]
 
-    coMarketLandscape: [Market Landscape - Provide a brief overview of the competitive landscape, including key competitors (what type of companies they are, and what are their names), their strengths and weaknesses, and the company's unique positioning and differentiation compared to them. Summarize in 2-3 sentences.]
+    coMarketLandscape: [Market Landscape - Provide a brief overview of the competitive landscape, including both global and regional key competitors (what type of companies they are, and their relative names), their strengths and weaknesses, and the company's unique positioning and differentiation compared to them. Summarize in 2-3 sentences.]
 
-    coExecutiveSummary: [In one sentence, summarize what the company does and why it is a compelling investment opportunity. This should be a high-level overview that captures the essence of the company and its potential based on responses above.]
+    coExecutiveSummary: [In one sentence, summarize what the company does and why it is a compelling investment opportunity (without explicitly saying this is a compelling investment opportunity to prevent being too salesy). This should be a high-level overview that captures the essence of the company and its potential based on responses above, so that the reader immediately understands what this company does, represents, and why it is special.]
     
     The following content should be used to create the summary:
     Company website content:

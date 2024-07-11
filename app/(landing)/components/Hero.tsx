@@ -5,6 +5,7 @@ import { AuroraBackground } from "@/components/ui/aurora-background";
 import Arrow from "@/components/ui/Arrow";
 import React from "react";
 import { HoverBorderGradient } from "@/components/ui/HoverBorderGradient";
+import Link from "next/link";
 
 const Hero = () => {
   const words = [
@@ -40,13 +41,15 @@ const Hero = () => {
           </p>
 
           <div className="mt-10 flex justify-center text-center">
-            <HoverBorderGradient
-              containerClassName="rounded-full"
-              as="button"
-              className=" text-white flex items-center space-x-2 z-[1] "
-            >
-              <span>Get {config.appName}</span>
-            </HoverBorderGradient>
+            <Link href="/dashboard" passHref>
+              <HoverBorderGradient
+                containerClassName="rounded-full"
+                as="button"
+                className=" text-white flex items-center space-x-2 z-[1] "
+              >
+                <span>Get {config.appName}</span>
+              </HoverBorderGradient>
+            </Link>
           </div>
         </div>
         {/* <div className="lg:w-full">
